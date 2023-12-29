@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- dashboard.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Pemilih</title>
+</head>
+<body>
+    <h1>Data Pemilih Teratas</h1>
+    <ul>
+        {% for koordinator in data_koordinator %}
+            <li>{{ koordinator.nama}} - {{koordinator.nik}}</li>  <!-- Ubah pemilih.nama dengan field yang sesuai -->
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+{% endblock %}

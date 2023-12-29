@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pemilih Filter</title>
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <style>
+
+        .content {
+            margin-left: 0px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            display: inline-block;
+        }
+        p {
+        margin-bottom: 5px; 
+        }
+        #headerTitlePemilih {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+        #headerTitlePemilihr, #headerDaftarPemilih{
+            flex-direction: column; 
+            text-align: center; 
+        }
+        #headerTitlePemilih h3,
+        #headerTitlePemilih h5 {
+            margin: 10px 0; 
+        }
+        }
+
+        #headerDaftarPemilih {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-left: -20px;
+        margin-top: 0px;
+        }
+
+        #daftarPemilih{
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+        .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176); 
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+    .btn-style-2{
+        background-color: #FFA41B;
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px;
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-2:hover {
+        background-color: #c5811a; 
+        color: #ffffff;
+        text-decoration: none; 
+    }
+    .btn-style-3{
+        background-color: #CC3300; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 5px;
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-3:hover {
+        background-color: #952500; 
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+    </style>
+</head>
+<body>
+<div id="keseluruhan">
+    <div id="headerDaftarPemilih">
+        <h4>Jumlah Relawan Setelah Filter: {{ jumlah_data_setelah_filter }}</h4>
+        <a href="{% url 'tambah_pemilih' %}"class="btn-style-1">Tambah Relawan</a>
+    </div>
+
+    <div class="card-container">
+        {% if data_pemilih %}
+            {% for pemilih in data_pemilih %}
+            <div class="card shadow-sm" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pemilih.nama }}</h5>
+                    <p>NIK: <strong>{{ pemilih.nik }}</strong> </p>
+                    <p>Kabupaten: {{ pemilih.kabupaten|title }}</p>
+                    <p>Kecamatan: {{ pemilih.kecamatan|title }}</p>
+                    <p>Kelurahan: {{ pemilih.kelurahan|title }}</p>
+                    <p>TPS: {{ pemilih.tps }}</p>
+                        <div class="float-end mt-2" >
+                        <button type="button" class="btn-style-2" onclick="editCoordinator('{{ pemilih.id }}')">Ubah</button>
+                        <button type="button" class="btn-style-3" onclick="deleteCoordinator('{{ pemilih.id }}')">Hapus</button>
+                        </div>
+            </div>
+            </div>
+            
+            {% endfor %}
+            
+    
+        {% else %}
+            <p>Tidak Ada Relawan yang Terdaftar.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+    
+    <script>
+
+    </script>
+    
+
+
+</body>
+</html>
+
+{% endblock %}

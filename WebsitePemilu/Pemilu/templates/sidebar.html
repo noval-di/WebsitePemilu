@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <style>
+   body {
+      font-family: "Lato", sans-serif;
+   }
+
+   .sidebar {
+      height: 100%;
+      width: 300px;
+      bottom: 0;
+      left: 0;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      transition: 0.5s;
+      padding-top: 55px;
+      position:fixed;
+      z-index:1000;
+   }
+
+   .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+   }
+
+   .sidebar a:hover {
+      color: #f1f1f1;
+   }
+
+   .sidebar .closebtn {
+      position: relative;
+      top: 0;
+      left: 160px;
+      font-size: 36px;
+      margin-left: 50px;
+   }
+
+   .openbtn {
+      top: 50%;
+      position:fixed;
+      z-index:999;
+      font-size: 20px;
+      cursor: pointer;
+      color: black;
+      padding: 10px 15px;
+      border: none;
+   }
+
+
+   .openbtn:hover {
+      background-color: #444;
+   }
+
+   #content {
+      transition: margin-left 0.5s;
+      padding: 10px;
+      width: 100%;
+      position:absolute;
+      z-index:1;
+      overflow-x: hidden;
+   }
+
+   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+   @media screen and (max-height: 450px) {
+      .sidebar {
+         padding-top: 15px;
+      }
+      .sidebar a {
+         font-size: 18px;
+      }
+   }
+   </style>
+</head>
+<body>
+   <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="hide()">×</a>
+      <div class="row">
+        <div class="initial_point"> {% block content-initial_point %} {% endblock %}</div>
+        <div class="filter"> {% block content-filter %} {% endblock %}</div>
+        <div class="start_btn"> {% block content-start_btn %} {% endblock %}</div>
+    </div>
+   </div>
+   <div id="content">
+      <button class="openbtn" id="openbtn" onclick="show()">☰</button>
+      {% block content-main_content %}
+          
+      {% endblock %}
+   </div>
+   <script>
+   function show() {
+      document.getElementById("mySidebar").style.width = "300px";
+      document.getElementById("content").style.marginLeft = "0px";
+   }
+
+   function hide() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("content").style.marginLeft = "0px";
+   }
+   </script>
+</body>
+</html>
+
+{% endblock %}
+  

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Pemilih</title>
+
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+
+
+        .content {
+            margin-left: 20px;
+            margin-right: 20px;
+           
+        }
+        /* CSS untuk konten halaman */
+
+        .card {
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+
+        display: flex;
+        align-items: start; 
+
+        border-radius: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+    }
+        
+        .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff;
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+        margin-top: 10px;
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176); 
+        color: #ffffff; 
+        text-decoration: none; 
+
+    }
+    
+
+    input[type="text"] {
+        width: 100%; 
+    }
+
+    .bg-terdaftar {
+    background-color: rgb(95, 193, 98); 
+    color: #fff; 
+}
+
+    .bg-tidakterdaftar {
+        background-color: #d25f57; 
+        color: #fff; 
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h3>Tambah Relawan</h3>
+            </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-body d-flex justify-content-start">
+                                <div><h5 class="card-title">Cek NIK berdasarkan Data DPT</h5></div>
+                            </div>
+                            <div>
+                                <form id="form-nik" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="nik" placeholder="Masukkan NIK">
+                                        <button class="btn-style-1" type="submit">Cek NIK</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn-style-1" href="{% url 'data_pemilih' %}">Kembali ke Data Relawan </a>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-body d-flex justify-content-start">
+                                <div><h5 class="card-title">Data DPT</h5></div>
+                            </div>
+                            <div>
+                                <div id="dataWarga" style="display: none;">
+                                    <!-- Menampilkan informasi data warga -->
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <label for="id_koordinator">Koordinator:</label>
+                                        <select name="koordinator" id="id_koordinator">
+                                            <option value="">Koordinator</option>
+                                            {% for koordinator in form.koordinator.field.queryset %}
+                                                <option value="{{ koordinator.id }}">{{ koordinator.nama }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn-style-1" type="submit">Tambah Relawan</button>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div> 
+        </div>
+    </div>
+
+    <div class="modal fade" id="popupMessageModal" tabindex="-1" role="dialog" aria-labelledby="popupMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupMessageModalLabel">Pesan</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="popup-message-body">
+                    <!-- Pesan akan ditampilkan di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <script>
+        // Tangkap form submission
+        document.getElementById('form-nik').addEventListener('submit', function(event) {
+            event.preventDefault(); // Hindari submit bawaan
+    
+            var formData = new FormData(this);
+    
+            // Kirim data NIK ke view untuk verifikasi
+            fetch('/verifikasi-nik/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}' // Token CSRF dari Django
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.registered) {
+                    document.getElementById('popup-message-body').classList.remove('bg-tidakterdaftar'); 
+                    document.getElementById('popup-message-body').innerHTML = 'NIK terdaftar sebagai DPT';
+                    $('#popupMessageModal .modal-body').addClass('bg-terdaftar'); // Tambahkan kelas untuk warna hijau
+                    document.getElementById('dataWarga').style.display = 'block';
+
+                    // Update elemen form dengan informasi dari data_warga
+                    
+                    document.getElementById('id_kabupaten').value = data.data_warga.kabupaten;
+                    document.getElementById('id_kecamatan').value = data.data_warga.kecamatan;
+                    document.getElementById('id_kelurahan').value = data.data_warga.kelurahan;
+
+                    document.getElementById('id_nkk').value = data.data_warga.nkk;
+                    document.getElementById('id_nik').value = data.data_warga.nik;
+                    document.getElementById('id_nama').value = data.data_warga.nama;
+                    document.getElementById('id_tempat_lahir').value = data.data_warga.tempat_lahir;
+                    document.getElementById('id_tanggal_lahir').value = data.data_warga.tanggal_lahir;
+                    document.getElementById('id_sts_kawin').value = data.data_warga.sts_kawin;
+                    document.getElementById('id_kelamin').value = data.data_warga.kelamin;
+                    document.getElementById('id_alamat').value = data.data_warga.alamat;
+                    document.getElementById('id_rt').value = data.data_warga.rt;
+                    document.getElementById('id_rw').value = data.data_warga.rw;
+                    document.getElementById('id_disabilitas').value = data.data_warga.disabilitas;
+                    document.getElementById('id_ektp').value = data.data_warga.ektp;
+                    document.getElementById('id_tps').value = data.data_warga.tps;
+
+                } else {
+                    document.getElementById('popup-message-body').innerHTML = 'NIK tidak terdaftar sebagai DPT';
+                    $('#popupMessageModal .modal-body').addClass('bg-tidakterdaftar');
+                    document.getElementById('dataWarga').style.display = 'none';
+                }
+                $('#popupMessageModal').modal('show'); 
+            });
+        });
+
+
+    </script>
+    
+
+
+</body>
+</html>
+
+{% endblock %}
