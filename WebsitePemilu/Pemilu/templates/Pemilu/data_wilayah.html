@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<!-- data_wilayah.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Wilayah Pemilu</title>
+    <style>
+        
+        header {
+            width: 100%;
+            height: 35vh; 
+            background-color: #f2f2f2;
+        }
+        main {
+            width: 100%;
+            height: 65vh; 
+            overflow-y: auto; 
+            padding: 20px;
+        }
+        footer {
+            width: 100%;
+            background-color: #ccc;
+            text-align: center;
+            padding: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .list_kabupaten{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .custom_1{
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        min-height: 180px; 
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 15px;
+    }
+    custom_2{
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        min-height: 180px; 
+        border-radius: 15px;
+    }
+
+    .number {
+        font-size: 50px;
+        font-weight: bold; 
+        text-align: center;
+        color: #F86F03;
+    }
+
+    .description {
+        text-align: center; 
+        font-size: 22px;
+        font-weight: 400;
+    }
+    .toggle-button{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px;
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .toggle-button:hover {
+        background-color: rgb(59, 69, 176);
+       
+    }
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div><h3>Informasi Umum</h3></div>
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card custom_1 shadow">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <div class="number">{{total_kabupaten}}</div>
+                                <div class="description">Total Kabupaten</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card custom_1 shadow">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <div class="number">{{total_kecamatan}}</div>
+                                <div class="description">Total Kecamatan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card custom_1 shadow">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <div class="number">{{total_kelurahan}}</div>
+                                <div class="description">Total Kelurahan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card custom_1 shadow">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <div class="number">{{total_tps}}</div>
+                                <div class="description">Total TPS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list_kabupaten">
+                <h3>List Kabupaten</h3>
+                    <div class="card custom_2">
+                        <div class="card-body">
+                            <table class="table-primary">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Kabupaten</th>
+                                        <th>Jumlah Koordinator Kabupaten</th>
+                                        <th>Jumlah Relawan Kabupaten</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for kabupaten_data in data_kabupaten %}
+                                    <tr>
+                                        <td>{{ kabupaten_data.nama_kabupaten|title }}</td>
+                                        <td>{{ kabupaten_data.jumlah_koordinator_kabupaten }}</td>
+                                        <td>{{ kabupaten_data.jumlah_pemilih_kabupaten }}</td>
+                                        <td>
+                                          <button class="toggle-button" data-target="detail_kabupaten_{{ forloop.counter }}">Show Detail</button>
+                                        </td>
+                                    </tr>
+                            
+                                    <tr id="detail_kabupaten_{{ forloop.counter }}" class="detail-row" style="display: none;">
+                                        <td colspan="4">
+                                            <table border="1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nama Kecamatan</th>
+                                                        <th>Jumlah Koordinator Kecamatan</th>
+                                                        <th>Jumlah Relawan Kecamatan</th>
+                                                        <th>Detail</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for kecamatan_data in kabupaten_data.kecamatan_list %}
+                                                    <tr>
+                                                        <td>{{ kecamatan_data.nama_kecamatan|title }}</td>
+                                                        <td>{{ kecamatan_data.jumlah_koordinator_kecamatan }}</td>
+                                                        <td>{{ kecamatan_data.jumlah_pemilih_kecamatan }}</td>
+                                                        <td>
+                                                          <button class="toggle-button" data-target="detail_kecamatan_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">Show Detail</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="detail_kecamatan_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="detail-row" style="display: none;">
+                                                        <td colspan="4">
+                                                            <table border="1">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Nama Kelurahan</th>
+                                                                        <th>Jumlah Koordinator Kelurahan</th>
+                                                                        <th>Jumlah Relawan Kelurahan</th>
+                                                                        <th>Detail</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for kelurahan_data in kecamatan_data.kelurahan_list %}
+                                                                    <tr>
+                                                                        <td>{{ kelurahan_data.nama_kelurahan|title }}</td>
+                                                                        <td>{{ kelurahan_data.jumlah_koordinator_kelurahan }}</td>
+                                                                        <td>{{ kelurahan_data.jumlah_pemilih_kelurahan }}</td>
+                                                                        <td>
+                                                                          <button class="toggle-button" data-target="detail_kelurahan_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">Show Detail</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="detail_kelurahan_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" class="detail-row" style="display: none;">
+                                                                        <td colspan="4">
+                                                                            <table border="1">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Nama TPS</th>
+                                                                                        <th>Jumlah Koordinator TPS</th>
+                                                                                        <th>Jumlah Relawan TPS</th>
+                                                                                        <th>Detail</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {% for tps_data in kelurahan_data.tps_list %}
+                                                                                    <tr>
+                                                                                        <td>{{ tps_data.nama_tps }}</td>
+                                                                                        <td>{{ tps_data.jumlah_koordinator_tps }}</td>
+                                                                                        <td>{{ tps_data.jumlah_pemilih_tps }}</td>
+                                                                                    </tr>
+                                                                                    {% endfor %}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+
+        
+      
+    </main>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.toggle-button');
+
+        toggleButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const targetId = button.getAttribute('data-target');
+                const detailElement = document.getElementById(targetId);
+
+                if (detailElement.style.display === 'none') {
+                    detailElement.style.display = 'block'; 
+                    button.textContent = 'Hide Detail';
+                } else {
+                    detailElement.style.display = 'none';
+                    button.textContent = 'Show Detail';
+                }
+
+            });
+            
+        });
+        
+    });
+
+
+
+    </script>
+
+
+
+</body>
+</html>
+
+
+  
+  
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Koordinator Filter</title>
+
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <style>
+
+        .content {
+            margin-left: 0px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        /* CSS untuk konten halaman */
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            display: inline-block;
+        }
+        p {
+        margin-bottom: 5px; 
+        }
+        #headerTitleKoordinator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+        #headerTitleKoordinator, #headerDaftarKoordinator{
+            flex-direction: column; 
+            text-align: center;
+        }
+        #headerTitleKoordinator h3,
+        #headerTitleKoordinator h5 {
+            margin: 10px 0; 
+        }
+        }
+
+        #headerDaftarKoordinator {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-left: -20px;
+        margin-top: 0px;
+        }
+
+        #daftarKoordinator{
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+
+        .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none;
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176);
+        color: #ffffff;
+        text-decoration: none; 
+    }
+    .btn-style-2{
+        background-color: #FFA41B; 
+        color: #ffffff;
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-2:hover {
+        background-color: rgb(167, 98, 63); 
+        color: #ffffff;
+        text-decoration: none; 
+    }
+    .btn-style-3{
+        background-color: #CC3300;
+        color: #ffffff;
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px;
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-3:hover {
+        background-color: #952500; 
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+
+
+    </style>
+</head>
+<body>
+<div id="keseluruhan">
+    <div id="headerDaftarKoordinator">
+        <h4 style="margin-bottom: 0;">Jumlah Koordinator Setelah Filter: {{ jumlah_data_setelah_filter }}</h4>
+        <a href="{% url 'tambah_koordinator' %}" class="btn-style-1 " >Tambah Koordinator</a>
+    </div>
+
+    <div class="card-container">
+        {% if data_koordinator %}
+            {% for koordinator in data_koordinator %}
+                <div class="card shadow-sm" style="width: 18rem;">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                      <h5 class="card-title">{{ koordinator.nama }}</h5>
+                      <p>NIK: <strong>{{ koordinator.nik }}</strong></p>
+                      <p>No HP: <strong>{{ koordinator.no_hp }}</strong></p>
+                    
+                      <p>Tingkat Kerja: <strong>{{ koordinator.tingkat_kerja|capfirst }}</strong></p>
+                      <p>Kabupaten Kerja: {{ koordinator.kabupaten_bertugas|capfirst }}</p>
+                      <p>Kecamatan Kerja: {{ koordinator.kecamatan_bertugas|capfirst }}</p>
+                      <p>Kelurahan Kerja: {{ koordinator.kelurahan_bertugas|capfirst }}</p>
+                      <p>TPS Kerja: {{ koordinator.tps_bertugas }}</p>
+                      <p>Jumlah Rekrutan: {{ koordinator.jumlah_rekrutan}} Relawan</p>
+                        <div class="float-end mt-2"  >
+                            <button type="button" class="btn-style-2" onclick="editCoordinator('{{ koordinator.id }}')">Ubah</button>
+                            <button type="button" class="btn-style-3" onclick="deleteCoordinator('{{ koordinator.id }}')">Hapus</button>
+                        </div>
+                    
+                    </div>
+                  </div>
+            {% endfor %}
+        {% else %}
+            <p>Tidak ada koordinator yang terdaftar.</p>
+        {% endif %}
+    </div>
+</div>
+
+    
+    <script>
+
+    </script>
+    
+
+
+</body>
+</html>
+
+{% endblock %}

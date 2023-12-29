@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data koordinator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <style>
+
+        .content {
+            margin-left: 0px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            display: inline-block;
+        }
+        p {
+        margin-bottom: 5px; 
+        }
+        #headerTitleKoordinator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+        #headerTitleKoordinator, #headerDaftarKoordinator{
+            flex-direction: column; 
+            text-align: center; 
+        }
+        #headerTitleKoordinator h3,
+        #headerTitleKoordinator h5 {
+            margin: 10px 0; 
+        }
+        }
+
+        #headerDaftarKoordinator {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        }
+
+        #daftarKoordinator {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        
+    }
+
+        @media (max-width: 600px) {
+            #form_filter {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+        }
+    }
+
+
+    #tingkat_kerja {
+        width: 160px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        color: #333;
+    }
+    #kabupaten_bertugas {
+        width: 160px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        color: #333;
+    }
+    #kecamatan_bertugas {
+        width: 160px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        color: #333;
+    }
+    #kelurahan_bertugas {
+        width: 160px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        color: #333;
+    }
+    #tps_bertugas { 
+        width: 160px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        color: #333;
+    }
+    #filterButton{
+        margin-left: 10px; 
+    }
+
+    .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px;
+        height: 35px;
+        text-decoration: none; /
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176); 
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+    .btn-style-2{
+        background-color: #FFA41B; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-2:hover {
+        background-color: #c5811a; 
+        color: #ffffff;
+        text-decoration: none; 
+    }
+    .btn-style-3{
+        background-color: #CC3300; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none;
+    }
+    .btn-style-3:hover {
+        background-color: #952500;
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+
+    
+
+    </style>
+</head>
+<body>
+    <div id="keseluruhan">
+        <div class="title" id="headerTitleKoordinator" >
+            <h3>Data Koordinator</h3>
+            <h4>Total Terdaftar: {{ total_koordinator }} Orang</h4>
+        </div>
+
+        <div id="form_filter">
+            <form id="filterForm" action="{% url 'filter_data_koordinator' %}" method="GET">
+                <!-- <label for="tingkat_kerja">Tingkat Kerja:</label> -->
+                <select name="tingkat_kerja" id="tingkat_kerja">
+                    <option value="semua_tingkat">Semua Tingkat</option>
+                    <option value="kabupaten">Kabupaten</option>
+                    <option value="kecamatan">Kecamatan</option>
+                    <option value="kelurahan">Kelurahan</option>
+                    <option value="tps">TPS</option>
+                    <option value="belum_ditentukan">Belum Ditentukan</option>
+                </select>
+        
+                <!-- <label for="kabupaten_bertugas">Nama Kabupaten:</label> -->
+                <select name="kabupaten_bertugas" id="kabupaten_bertugas">
+                    <option value="">Pilih Kabupaten</option>
+                    {% for kabupaten in kabupaten_list %}
+                        <option value="{{ kabupaten }}">{{ kabupaten|title  }}</option>
+                    {% endfor %}
+                </select>
+                <!-- <input type="text" name="nama_kabupaten" id="nama_kabupaten"> -->
+                
+                <!-- <label for="kecamatan_bertugas">Kecamatan Bertugasss:</label> -->
+                <select name="kecamatan_bertugas" id="kecamatan_bertugas">
+                    <option value="">Pilih Kecamatan</option>
+                    {% for kecamatan in kecamatan_list %}
+                        <option value="{{ kecamatan }}">{{ kecamatan|title }}</option>
+                    {% endfor %}
+                </select>
+        
+                <!-- <label for="kelurahan_bertugas">Kelurahan Bertugas:</label> -->
+                <select name="kelurahan_bertugas" id="kelurahan_bertugas">
+                    <option value="">Pilih Kelurahan</option>
+                    {% for kelurahan in kelurahan_list %}
+                        <option value="{{ kelurahan }}">{{ kelurahan|title }}</option>
+                    {% endfor %}
+                </select>
+        
+                <!-- <label for="tps_bertugas">TPS Bertugas:</label> -->
+                <select name="tps_bertugas" id="tps_bertugas">
+                    <option value="">Pilih TPS</option>
+                    {% for tps in tps_list %}
+                        <option value="{{ tps }}">{{ tps }}</option>
+                    {% endfor %}
+                </select>
+        
+                <button id="filterButton" class="btn-style-1" type="submit" >Filter</button>
+                <button id="unduhFilterButton" class="btn-style-1" type="button">Unduh Data</button>
+            </form>
+        </div>
+
+        <div id="daftarKoordinator" >
+            <div id="headerDaftarKoordinator">
+                <h4 style="margin-bottom: 0;">Daftar Koordinator</h4>
+                <a href="{% url 'tambah_koordinator' %}" class="btn-style-1 " >Tambah Koordinator</a>
+            </div>
+            
+            <div class="card-container">
+                {% if data_koordinator %}
+                    {% for koordinator in data_koordinator %}
+                        <div class="card shadow-sm" style="width: 18rem;">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                            <h5 class="card-title">{{ koordinator.nama }}</h5>
+                            <p>NIK: <strong>{{ koordinator.nik }}</strong></p>
+                            <p>No HP: <strong>{{ koordinator.no_hp }}</strong></p>
+                            
+                            <p>Tingkat Kerja: <strong>{{ koordinator.tingkat_kerja|title }}</strong></p>
+                            <p>Kabupaten Kerja: {{ koordinator.kabupaten_bertugas|title }}</p>
+                            <p>Kecamatan Kerja: {{ koordinator.kecamatan_bertugas|title }}</p>
+                            <p>Kelurahan Kerja: {{ koordinator.kelurahan_bertugas|title }}</p>
+                            <p>TPS Kerja: {{ koordinator.tps_bertugas }}</p>
+                            <p>Jumlah Rekrutan: {{ koordinator.jumlah_rekrutan}} Relawan</p>
+                                <div class="float-end mt-2"  >
+                                    <button type="button" class="btn-style-2" onclick="editCoordinator('{{ koordinator.id }}')">Ubah</button>
+                                    <button type="button" class="btn-style-3" onclick="deleteCoordinator('{{ koordinator.id }}')">Hapus</button>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Tidak ada koordinator yang terdaftar.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <script>
+        unduhFilterButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const formData = new FormData(filterForm);
+
+        fetch('/unduh-data-koordinator/?' + new URLSearchParams(formData))
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'data_koordinator.csv';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            });
+    });
+
+        const filterForm = document.getElementById('filterForm');
+        const daftarKoordinator = document.getElementById('daftarKoordinator');
+
+        const kabupatenDropdown = document.getElementById('kabupaten_bertugas');
+        const kecamatanDropdown = document.getElementById('kecamatan_bertugas');
+        const kelurahanDropdown = document.getElementById('kelurahan_bertugas');
+        const tpsDropdown = document.getElementById('tps_bertugas');
+
+        kabupatenDropdown.addEventListener('change', function() {
+            const selectedKabupaten = this.value;
+            const tingkatKerja = document.getElementById('tingkat_kerja').value;
+
+            fetch(`/get-kecamatan-koordinator/?tingkat_kerja=${tingkatKerja}&kabupaten_bertugas=${selectedKabupaten}`)
+                .then(response => response.json())
+                .then(data => {
+                    kecamatanDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                    data.forEach(kecamatan => {
+                        kecamatanDropdown.innerHTML += `<option value="${kecamatan}">${kecamatan}</option>`;
+                    });
+                });
+        });
+
+        kecamatanDropdown.addEventListener('change', function() {
+            const selectedKecamatan = this.value;
+            const tingkatKerja = document.getElementById('tingkat_kerja').value;
+            const selectedKabupaten = document.getElementById('kabupaten_bertugas').value;
+
+            fetch(`/get-kelurahan-koordinator/?tingkat_kerja=${tingkatKerja}&kabupaten_bertugas=${selectedKabupaten}&kecamatan_bertugas=${selectedKecamatan}`)
+                .then(response => response.json())
+                .then(data => {
+                    kelurahanDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>';
+                    data.forEach(kelurahan => {
+                        kelurahanDropdown.innerHTML += `<option value="${kelurahan}">${kelurahan}</option>`;
+                    });
+                });
+        });
+
+        kelurahanDropdown.addEventListener('change', function() {
+            const selectedKelurahan = this.value;
+            const tingkatKerja = document.getElementById('tingkat_kerja').value;
+            const selectedKabupaten = document.getElementById('kabupaten_bertugas').value;
+            const selectedKecamatan = document.getElementById('kecamatan_bertugas').value;
+
+            fetch(`/get-tps-koordinator/?tingkat_kerja=${tingkatKerja}&kabupaten_bertugas=${selectedKabupaten}&kecamatan_bertugas=${selectedKecamatan}&kelurahan_bertugas=${selectedKelurahan}`)
+                .then(response => response.json())
+                .then(data => {
+                    tpsDropdown.innerHTML = '<option value="">Pilih TPS</option>';
+                    data.forEach(tps => {
+                        tpsDropdown.innerHTML += `<option value="${tps}">${tps}</option>`;
+                    });
+                });
+        });
+
+
+        filterForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            fetch(this.getAttribute('action') + `?${new URLSearchParams(new FormData(this)).toString()}`)
+                .then(response => response.text())
+                .then(html => {
+
+                    daftarKoordinator.innerHTML = html;
+                });
+        });
+
+
+
+    function editCoordinator(coordinatorId) {
+
+        window.location.href = `/edit-koordinator/${coordinatorId}/`;
+    }
+    
+
+    function deleteCoordinator(coordinatorId) {
+
+        if (confirm("Apakah Anda yakin ingin menghapus koordinator ini?")) {
+            fetch(`/delete-koordinator/${coordinatorId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                
+                if (response.ok) {
+               
+                window.location.reload();
+            } else {
+                console.error('Gagal menghapus koordinator');
+            }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    </script>
+    
+
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Koordinator</title>
+    
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+
+        .content {
+            margin-left: 20px;
+            padding: 20px;
+        }
+        
+
+        .card {
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+         
+        display: flex;
+        align-items: start; 
+
+        border-radius: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        }
+
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+        .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+        margin-top: 10px;
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176); 
+        color: #ffffff;
+        text-decoration: none;
+        /
+    }
+    input[type="text"] {
+        width: 100%;
+       
+    }
+
+    .bg-terdaftar {
+    background-color: rgb(95, 193, 98); 
+    color: #fff; 
+}
+
+    .bg-tidakterdaftar {
+        background-color: #d25f57; 
+        color: #fff; 
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h3>Tambah Koordinator</h3>
+            </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-body d-flex justify-content-start">
+                                <div><h5 class="card-title">Cek NIK berdasarkan Data DPT</h5></div>
+                            </div>
+                            <div>
+                                <form id="form-nik" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="nik" placeholder="Masukkan NIK">
+                                        <button class="btn-style-1" type="submit">Cek NIK</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn-style-1" href="{% url 'data_koordinator' %}">Kembali ke Data Koordinator </a>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-body d-flex justify-content-start">
+                                <div><h5 class="card-title">Data DPT</h5></div>
+                            </div>
+                            <div>
+                                <div id="dataWarga" style="display: none;">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <!-- {{ form.as_p }} -->
+                                        <p>
+                                        <label for="id_kabupaten">Kabupaten: </label>
+                                        <input id="id_kabupaten" type="text" name="kabupaten" maxlength="255" required>
+                                        </p>
+                                        <p>
+                                        <label for="id_kecamatan">Kecamatan: </label>
+                                        <input id="id_kecamatan" type="text" name="kecamatan" maxlength="255" required>
+                                        </p>
+                                        <p>
+                                        <label for="id_kelurahan">Kelurahan: </label>
+                                        <input id="id_kelurahan" type="text" name="kelurahan" maxlength="255" required>
+                                        </p>
+                                        <p>
+                                        <label for="id_nkk">NKK: </label>
+                                        <input id="id_nkk" type="number" name="nkk" required></p>
+                                        <p>
+                                        <label for="id_nik">NIK: </label>
+                                        <input id="id_nik" type="number" name="nik" required></p>
+                                        <p>
+                                        <label for="id_nama">Nama: </label>
+                                        <input id="id_nama" type="text" maxlength="255" name="nama" required></p>
+                                        <p>
+                                        <label for="id_tempat_lahir">Tempat Lahir: </label>
+                                        <input id="id_tempat_lahir" type="text" maxlength="255" name="tempat_lahir" required></p>
+                                        <p>
+                                        <label for="id_tanggal_lahir"> Tanggal Lahir: </label>
+                                        <input id="id_tanggal_lahir" type="text" maxlength="255" name="tanggal_lahir" required></p>
+                                        <p>
+                                        <label for="id_sts_kawin">Status Kawin: </label>
+                                        <input id="id_sts_kawin" type="text" maxlength="255" name="sts_kawin" required></p>
+                                        <p>
+                                        <label for="id_kelamin">Jenis Kelamin: </label>
+                                        <input id="id_kelamin" type="text" maxlength="255" name="kelamin" required></p>
+                                        <p>
+                                        <label for="id_alamat">Alamat: </label>
+                                        <input id="id_alamat" type="text" maxlength="255" name="alamat" required>
+                                        <p>
+                                        <label for="id_rt">RT: </label>
+                                        <input id="id_rt" type="number" name="rt" required></p>
+                                        <p>
+                                        <label for="id_rw">RW: </label>
+                                        <input id="id_rw" type="number"  name="rw" required></p>
+                                        <p>
+                                        <label for="id_disabilitas">Disabilitas: </label>
+                                        <input id="id_disabilitas" type="number" maxlength="255" name="disabilitas" required></p>
+                                        <p>
+                                        <label for="id_ektp">EKTP: </label>
+                                        <input id="id_ektp" type="text" maxlength="255" name="ektp" required></p>
+                                        <p>
+                                        <label for="id_tps">TPS: </label>
+                                        <input id="id_tps" type="number"  name="tps" required></p>
+                                        <p>
+                                        <label for="id_tingkat_kerja">Tingkat Kerja: </label>
+                                        <select id="id_tingkat_kerja" name="tingkat_kerja" required>
+                                            <option value="kabupaten">Kabupaten</option>
+                                            <option value="kecamatan">Kecamatan</option>
+                                            <option value="kelurahan">Kelurahan</option>
+                                            <option value="tps">TPS</option>
+                                            <option value="belum_ditentukan" selected>Belum Ditentukan</option>
+                                        </select></p>
+                                        <p>
+                                        <label for="id_kabupaten_bertugas">Kabupaten:</label>
+                                        <select id="id_kabupaten_bertugas" name="kabupaten_bertugas">
+                                            <option value="">Pilih Kabupaten</option>
+                                            <option value="Belitung">Belitung</option>
+                                            <option value="Belitung Timur">Belitung Timur</option>
+                                        </select></p>
+                                        <p>
+                                            <label for="id_kecamatan_bertugas">Kecamatan:</label>
+                                            <select id="id_kecamatan_bertugas" name="kecamatan_bertugas">
+                                              <option value="">Pilih Kecamatan</option>
+                                            </select></p>
+                                        <p> 
+                                            <label for="id_kelurahan_bertugas">Kelurahan:</label>
+                                            <select id="id_kelurahan_bertugas" name="kelurahan_bertugas">
+                                              <option value="">Pilih Kelurahan</option>
+                                            </select></p>
+
+                                        <p>
+                                        <label for="id_tps_bertugas">TPS Bertugas: </label>
+                                        <input id="id_tps_bertugas" type="number"  name="tps_bertugas"></p>
+                                        <p>
+                                        <label for="id_foto_ktp">Foto KTP: </label>
+                                        <input id="id_foto_ktp" type="file"  name="foto_ktp" accept="image/*" required></p>
+                                        <p>
+                                        <label for="id_no_hp">No HP: </label>
+                                        <input id="id_no_hp" type="number"  name="no_hp" required></p>
+                                        <p>
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn-style-1" type="submit">Tambah Koordinator</button>
+                                        </div></p>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div> 
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="popupMessageModal" tabindex="-1" role="dialog" aria-labelledby="popupMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupMessageModalLabel">Pesan</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="popup-message-body">
+                    <!-- Pesan akan ditampilkan di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        document.getElementById('form-nik').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+    
+            var formData = new FormData(this);
+    
+            
+            fetch('/verifikasi-nik/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.registered) {
+                    document.getElementById('popup-message-body').classList.remove('bg-tidakterdaftar'); // Menghapus kelas warna merah
+                    document.getElementById('popup-message-body').innerHTML = 'NIK terdaftar sebagai DPT';
+                    $('#popupMessageModal .modal-body').addClass('bg-terdaftar'); // Tambahkan kelas untuk warna hijau
+                    document.getElementById('dataWarga').style.display = 'block';
+                    
+                    document.getElementById('id_kabupaten').value = data.data_warga.kabupaten;
+                    document.getElementById('id_kecamatan').value = data.data_warga.kecamatan;
+                    document.getElementById('id_kelurahan').value = data.data_warga.kelurahan;
+
+                    document.getElementById('id_nkk').value = data.data_warga.nkk;
+                    document.getElementById('id_nik').value = data.data_warga.nik;
+                    document.getElementById('id_nama').value = data.data_warga.nama;
+                    document.getElementById('id_tempat_lahir').value = data.data_warga.tempat_lahir;
+                    document.getElementById('id_tanggal_lahir').value = data.data_warga.tanggal_lahir;
+                    document.getElementById('id_sts_kawin').value = data.data_warga.sts_kawin;
+                    document.getElementById('id_kelamin').value = data.data_warga.kelamin;
+                    document.getElementById('id_alamat').value = data.data_warga.alamat;
+                    document.getElementById('id_rt').value = data.data_warga.rt;
+                    document.getElementById('id_rw').value = data.data_warga.rw;
+                    document.getElementById('id_disabilitas').value = data.data_warga.disabilitas;
+                    document.getElementById('id_ektp').value = data.data_warga.ektp;
+                    document.getElementById('id_tps').value = data.data_warga.tps;
+
+                } else {
+                    document.getElementById('popup-message-body').innerHTML = 'NIK tidak terdaftar sebagai DPT';
+                    $('#popupMessageModal .modal-body').addClass('bg-tidakterdaftar');
+                    document.getElementById('dataWarga').style.display = 'none';
+
+                    // alert('NIK tidak terdaftar sebagai DPT');
+                    // Munculkan pesan kesalahan dalam bentuk pop-up 
+                var errorPopup = document.createElement('div');
+                errorPopup.className = 'popup';
+                errorPopup.innerHTML = 'Terjadi kesalahan dalam pengisian wilayah tugas koordinator.';
+                document.body.appendChild(errorPopup);
+                setTimeout(() => {
+                    errorPopup.remove(); // Hilangkan pop-up setelah beberapa detik (opsional)
+                }, 5000); // Ubah angka ini untuk menentukan berapa detik pesan akan ditampilkan
+                }
+                $('#popupMessageModal').modal('show'); 
+                
+            });
+        });
+ const dataWilayah ={
+    "Belitung":{
+        "Membalong": ["Bantan", "Gunung Riting", "Kembiri", "Lassar", "Membalong", "Mentigi", "Padang Kandis", "Perpat","Pulau Seliu", "Pulau Sumedang", "Simpang Rusa", "Tanjungrusa"],
+        "Tanjung Pandan": ["Air Ketekok", "Air Pelempang Jaya", "Air Rayak", "Air Merbau","Air Saga", "Buluh Tumbang", "Dukong", "Juru Seberang","Perawas", "Kampong Damai", "Kota", "Lesung Batang","Paal Satu", "Pangkallalang", "Parit", "Tanjungpendam"],
+        "Badau": ["Air Batu Buding", "Badau", "Cerucuk", "Ibul","Kacang Butor", "Pegantungan", "Sungai Samak"],
+        "Sijuk": ["Air Selumar", " Air Seruk", "Batu Itam", "Keciput","Pelepak Pute", "Sijuk", "Sungai Padang", "Tanjong Tinggi","Tanjung Binga", "Terong",],
+        "Selat Nasik": ["Petaling", "Pulau Gersik", "Selat Nasik", "Suak Gual"],
+    },
+    "Belitung Timur":{
+        "Damar": ["Air Kelik","Burong Mandi","Mempaya","Mengkubang","Sukamandi"],
+        "Dendang": ["Balok","Dendang","Jangkang","Nyuruk"],
+        "Gantung": ["Batu Penyu","Gantung","Jangkar Asam","Lenggang","Lilangan","Limbongan","Selingsing"],
+        "Kelapa Kampit": ["Buding","Cendil","Mayang","Mentawak","Pembaharuan","Senyubuk"],
+        "Manggar": ["Baru","Bentaian Jaya","Buku Limau","Kelubi","Kurnia Jaya","Lalang","Lalang Jaya","Mekar Jaya","Padang"],
+        "Simpang Pesak": ["Dukong","Simpang Pesak","Tanjung Batu Itam","Tanjung Kelumpang"],
+        "Simpang Renggiang": ["Aik Madu","Lintang","Renggiang","Simpang Tiga"], 
+    },
+ };
+
+const kabupatenDropdown = document.getElementById('id_kabupaten_bertugas');
+const kecamatanDropdown = document.getElementById('id_kecamatan_bertugas');
+const kelurahanDropdown = document.getElementById('id_kelurahan_bertugas');
+
+
+function populateKecamatanDropdown(selectedKabupaten) {
+    kecamatanDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
+    const kecamatanOptions = dataWilayah[selectedKabupaten];
+
+    Object.keys(kecamatanOptions).forEach(kecamatan => {
+        const option = document.createElement('option');
+        option.value = kecamatan;
+        option.textContent = kecamatan;
+        kecamatanDropdown.appendChild(option);
+    });
+    document.getElementById('id_kabupaten_bertugas').value = selectedKabupaten;
+}
+
+function populateKelurahanDropdown(selectedKecamatan) {
+    kelurahanDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>';
+    const kelurahanOptions = dataWilayah[kabupatenDropdown.value][selectedKecamatan];
+
+    kelurahanOptions.forEach(kelurahan => {
+        const option = document.createElement('option');
+        option.value = kelurahan;
+        option.textContent = kelurahan;
+        kelurahanDropdown.appendChild(option);
+    });
+    document.getElementById('id_kecamatan_bertugas').value = selectedKecamatan;
+}
+
+kabupatenDropdown.addEventListener('change', function() {
+    const selectedKabupaten = this.value;
+    populateKecamatanDropdown(selectedKabupaten);
+});
+
+kecamatanDropdown.addEventListener('change', function() {
+    const selectedKecamatan = this.value;
+    populateKelurahanDropdown(selectedKecamatan);
+});
+
+
+    </script>
+    
+
+
+</body>
+</html>
+
+{% endblock %}
