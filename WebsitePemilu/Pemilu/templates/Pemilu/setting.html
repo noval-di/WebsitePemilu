@@ -59,7 +59,59 @@
 
         </div>
       </div>
+      <div class="modal fade" id="popupMessageModal" tabindex="-1" role="dialog" aria-labelledby="popupMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupMessageModalLabel">Pesan</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="popup-message-body">
+                    <!-- Pesan akan ditampilkan di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+    .modal-body {
+    background-color: rgb(95, 193, 98); 
+    color: #fff; 
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form'); // Ganti dengan selector form yang sesuai jika perlu
 
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Menghentikan pengiriman form secara langsung
+
+            // Lakukan pengiriman form secara asynchronous menggunakan teknik seperti Fetch atau XMLHttpRequest
+            // Contoh penggunaan Fetch:
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Jika respons OK, tampilkan modal
+                    const modal = new bootstrap.Modal(document.getElementById('popupMessageModal'));
+                    const modalBody = document.getElementById('popup-message-body');
+                    modalBody.innerHTML = 'Pengaturan wilayah berhasil diubah!'; // Pesan yang ingin ditampilkan
+
+                    modal.show(); // Tampilkan modal
+                } else {
+                    // Handle kasus lain jika perlu
+                    console.error('Terjadi kesalahan:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Ada masalah dengan pengaturan wilayah:', error);
+            });
+        });
+    });
+</script>
 </body>
 
 

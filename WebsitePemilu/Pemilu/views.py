@@ -244,14 +244,15 @@ def tambah_koordinator(request):
             koordinator = form.save(commit=False)
             koordinator.jumlah_rekrutan = 0  
             koordinator.save()
-            messages.success(request, 'Koordinator berhasil ditambahkan')
+            return JsonResponse({'success': True, 'message': 'Koordinator berhasil ditambahkan', 'redirect': '/tambah-koordinator/'})
         else:
+            error_message = 'Terjadi kesalahan dalam pengisian wilayah tugas koordinator.'
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"Error pada field '{field}': {error}")
-           
-            if 'kabupaten_bertugas' in form.errors or 'kecamatan_bertugas' in form.errors or 'kelurahan_bertugas' in form.errors or 'tps_bertugas' in form.errors:
-                messages.error(request, 'Terjadi kesalahan dalam pengisian wilayah tugas koordinator.')
+                    if field in ['kabupaten_bertugas', 'kecamatan_bertugas', 'kelurahan_bertugas', 'tps_bertugas']:
+                        messages.error(request, error_message)
+            return JsonResponse({'success': False, 'message': error_message})
     else:
         form = KoordinatorForm()
     if form.errors:
@@ -330,7 +331,13 @@ def tambah_pemilih(request):
             koordinator = DataKoordinator.objects.get(pk=koordinator_id)
             koordinator.jumlah_rekrutan += 1
             koordinator.save()
-            pemilih.save() 
+            pemilih.save()
+            return JsonResponse({'success': True, 'message': 'Relawan berhasil ditambahkan', 'redirect': '/tambah-pemilih/'}) 
+        else:
+            error_message = 'Terjadi kesalahan dalam pengisian form relawan.'
+            for field, errors in form.errors.items():
+                messages.error(request, error_message)
+            return JsonResponse({'success': False, 'message': error_message})
     else:
         form = PemilihForm()
     
