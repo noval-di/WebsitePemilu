@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     pengaturan = PengaturanWilayah.objects.first()
-    print("Pengaturan wilayah:", pengaturan.__dict__)
+    
 
     kabupaten_settings = {
         'Belitung': pengaturan.kabupaten_belitung,
@@ -510,6 +510,7 @@ def data_wilayah_view(request):
     total_kelurahan = len(kelurahan_list)
 
     data_kabupaten = []
+    total_tps = 0
     for kabupaten in kabupaten_list:
         kecamatan_list = DataWarga.objects.filter(kabupaten=kabupaten['kabupaten']).values('kecamatan').distinct()
         data_kecamatan = []
@@ -517,7 +518,7 @@ def data_wilayah_view(request):
         jumlah_koordinator_kabupaten = DataKoordinator.objects.filter(tingkat_kerja='kabupaten', kabupaten_bertugas__iexact=kabupaten['kabupaten']).count()
         jumlah_pemilih_kabupaten = DataPemilih.objects.filter(kabupaten=kabupaten['kabupaten']).count()
         
-        total_tps = 0
+        
         for kecamatan in kecamatan_list:
             kelurahan_list = DataWarga.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan['kecamatan']).values('kelurahan').distinct()
             data_kelurahan = []
