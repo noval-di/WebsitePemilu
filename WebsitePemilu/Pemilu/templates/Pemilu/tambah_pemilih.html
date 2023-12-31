@@ -99,7 +99,7 @@
                             <div>
                                 <div id="dataWarga" style="display: none;">
                                     <!-- Menampilkan informasi data warga -->
-                                    <form method="post" enctype="multipart/form-data">
+                                    <form id="form-tambah-pemilih" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {{ form.as_p }}
                                         <label for="id_koordinator">Koordinator:</label>
@@ -191,6 +191,43 @@
                 $('#popupMessageModal').modal('show'); 
             });
         });
+
+        document.getElementById('form-tambah-pemilih').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+        fetch('/tambah-pemilih/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                document.getElementById('popup-message-body').classList.remove('bg-tidakterdaftar'); // Menghapus kelas warna merah
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-terdaftar');
+                $('#popupMessageModal').on('hidden.bs.modal', function (e) {
+                    window.location.href = data.redirect;
+                });
+            } else {
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-tidakterdaftar');
+            }
+            $('#popupMessageModal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
 
 
     </script>

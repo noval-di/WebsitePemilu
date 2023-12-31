@@ -12,7 +12,7 @@ django.setup()
 from Pemilu.models import DataWarga  # Ganti dengan model yang sesuai
 
 def import_data():
-    excel_file = '/home/noval/Desktop/Aplikasi Pemenangan Caleg/BELITUNG_baru.xlsx'
+    excel_file = '/home/noval/Desktop/Aplikasi Pemenangan Caleg/belitung_timur_part1.xlsx'
     excel_data = pd.read_excel(excel_file)
 
     for index, row in excel_data.iterrows():

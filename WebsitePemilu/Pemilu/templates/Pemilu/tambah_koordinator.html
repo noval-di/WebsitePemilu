@@ -112,7 +112,7 @@
                             </div>
                             <div>
                                 <div id="dataWarga" style="display: none;">
-                                    <form method="post" enctype="multipart/form-data">
+                                    <form id="form-tambah-koordinator" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <!-- {{ form.as_p }} -->
                                         <p>
@@ -278,21 +278,50 @@
                     document.getElementById('popup-message-body').innerHTML = 'NIK tidak terdaftar sebagai DPT';
                     $('#popupMessageModal .modal-body').addClass('bg-tidakterdaftar');
                     document.getElementById('dataWarga').style.display = 'none';
-
-                    // alert('NIK tidak terdaftar sebagai DPT');
-                    // Munculkan pesan kesalahan dalam bentuk pop-up 
-                var errorPopup = document.createElement('div');
-                errorPopup.className = 'popup';
-                errorPopup.innerHTML = 'Terjadi kesalahan dalam pengisian wilayah tugas koordinator.';
-                document.body.appendChild(errorPopup);
-                setTimeout(() => {
-                    errorPopup.remove(); // Hilangkan pop-up setelah beberapa detik (opsional)
-                }, 5000); // Ubah angka ini untuk menentukan berapa detik pesan akan ditampilkan
                 }
                 $('#popupMessageModal').modal('show'); 
                 
             });
         });
+
+        document.getElementById('form-tambah-koordinator').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+        fetch('/tambah-koordinator/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                document.getElementById('popup-message-body').classList.remove('bg-tidakterdaftar'); // Menghapus kelas warna merah
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-terdaftar');
+                $('#popupMessageModal').on('hidden.bs.modal', function (e) {
+                    window.location.href = data.redirect;
+                });
+            } else {
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-tidakterdaftar');
+            }
+            $('#popupMessageModal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+
  const dataWilayah ={
     "Belitung":{
         "Membalong": ["Bantan", "Gunung Riting", "Kembiri", "Lassar", "Membalong", "Mentigi", "Padang Kandis", "Perpat","Pulau Seliu", "Pulau Sumedang", "Simpang Rusa", "Tanjungrusa"],
