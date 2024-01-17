@@ -12,12 +12,11 @@ django.setup()
 from Pemilu.models import DataWarga  # Ganti dengan model yang sesuai
 
 def import_data():
-    excel_file = '/home/noval/Desktop/Aplikasi Pemenangan Caleg/belitung_timur_part1.xlsx'
+    excel_file = '/home/ubuntu/pangkalpinang_part_4.xlsx'
     excel_data = pd.read_excel(excel_file)
 
     for index, row in excel_data.iterrows():
-        formatted_date = datetime.strptime(row['TANGGAL LAHIR'], '%d-%m-%Y').strftime('%Y-%m-%d')
-        
+        formatted_date = datetime.strptime(row['TANGGAL LAHIR'], '%Y - %m - %d').strftime('%Y-%m-%d')
         DataWarga.objects.create(
             kabupaten = row['KABUPATEN'],
             kecamatan = row['KECAMATAN'],

@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     pengaturan = PengaturanWilayah.objects.first()
-    print("Pengaturan wilayah:", pengaturan.__dict__)
+    
 
     kabupaten_settings = {
         'Belitung': pengaturan.kabupaten_belitung,
@@ -19,7 +19,7 @@ def dashboard(request):
         'Bangka Barat': pengaturan.kabupaten_bangka_barat,
         'Bangka Selatan': pengaturan.kabupaten_bangka_selatan,
         'Bangka Tengah': pengaturan.kabupaten_bangka_tengah,
-        'Pangkal Pinang': pengaturan.kota_pangkal_pinang,
+        'Pangkalpinang': pengaturan.kota_pangkal_pinang,
     }
 
     total_pemilih = 0
@@ -809,3 +809,4 @@ def isi_hasil_pemilu(request, kelurahan_name):
     }
 
     return render(request, 'Pemilu/isi_hasil_pemilu.html', context)
+

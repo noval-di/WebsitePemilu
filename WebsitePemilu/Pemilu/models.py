@@ -69,7 +69,7 @@ class DataKoordinator(models.Model):
     
     foto_ktp = models.ImageField('Foto KTP', upload_to='foto_ktp/')
     jumlah_rekrutan = models.IntegerField('Jumlah Rekrutan',default=0)
-    no_hp = models.IntegerField('No HP')
+    no_hp = models.CharField('No HP',max_length=30)
 
     def clean(self):
         if self.tingkat_kerja == 'kabupaten':
