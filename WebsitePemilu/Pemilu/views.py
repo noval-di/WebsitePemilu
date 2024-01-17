@@ -19,7 +19,7 @@ def dashboard(request):
         'Bangka Barat': pengaturan.kabupaten_bangka_barat,
         'Bangka Selatan': pengaturan.kabupaten_bangka_selatan,
         'Bangka Tengah': pengaturan.kabupaten_bangka_tengah,
-        'Pangkal Pinang': pengaturan.kota_pangkal_pinang,
+        'Pangkalpinang': pengaturan.kota_pangkal_pinang,
     }
 
     total_pemilih = 0
