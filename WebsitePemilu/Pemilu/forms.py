@@ -40,6 +40,16 @@ class KoordinatorForm(forms.ModelForm):
     class Meta:
         model = DataKoordinator
         exclude = ['jumlah_rekrutan']
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        nik = str(self.cleaned_data['nik'])
+        instance.foto_ktp.name = f'foto_ktp_{nik}.jpg'
+
+        if commit:
+            instance.save()
+
+        return instance
 
     def clean(self):
         cleaned_data = super().clean()
@@ -95,3 +105,11 @@ class PengaturanWilayahForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+    
+from .models import DataPemilu
+
+class DataPemiluForm(forms.ModelForm):
+    class Meta:
+        model = DataPemilu
+        fields = ['calon_1_2024', 'total_suara_2024', ]
+

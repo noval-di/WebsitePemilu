@@ -1,0 +1,484 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analisa</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto:wght@100&family=Water+Brush&display=swap" rel="stylesheet">
+  </head>
+</head>
+<body>
+ <h3> Analisa</h3>
+
+
+{% for data_kabupaten in data_by_kabupaten %}
+    <div class="card shadow">
+        <div class="card-body">
+            <h5 class="card-title">Kabupaten {{ data_kabupaten.nama_kabupaten }}</h5>
+            <div class="data-table">
+                <div>
+                    <p class="card-text">Ir. Rudianto Tjen - 2019</p>
+                    <p class="card-text">Ir. Rudianto Tjen - 2024</p>
+                    <p class="card-text">H. Rustam Effendi, S.E. - 2019</p>
+                    <p class="card-text">Irma Fika Adita, S.Kom. - 2019</p>
+                    <p class="card-text">Suara Partai - 2019:</p>
+                    <p class="card-text">Total Suara - 2019</p>
+                    <p class="card-text">Total Suara - 2024</p>
+                </div>
+                <div>
+                    <p class="card-text">:  {{ data_kabupaten.suara_calon_1_2019 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.suara_calon_1_2024 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.suara_calon_2_2019 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.suara_calon_3_2019 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.suara_partai_2019 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.total_suara_2019 }}</p>
+                    <p class="card-text">:  {{ data_kabupaten.total_suara_2024 }}</p>
+                </div>
+            </div>
+            <canvas id="myChart-{{ data_kabupaten.id }}" style="width:100%;max-width:800px"></canvas>
+            <script>
+                var xValues = [
+                    "Ir. Rudianto Tjen - 2019",
+                    "Ir. Rudianto Tjen - 2024", 
+                    "H. Rustam Effendi, S.E. - 2019", 
+                    "Irma Fika Adita, S.Kom. - 2019", 
+                    "Suara Partai - 2019", 
+                    "Total Suara - 2019",
+                    "Total Suara - 2024",];
+                var yValues = [
+                    "{{ data_kabupaten.suara_calon_1_2019 }}",
+                    "{{ data_kabupaten.suara_calon_1_2024 }}",
+                    "{{ data_kabupaten.suara_calon_2_2019 }}",
+                    "{{ data_kabupaten.suara_calon_3_2019 }}",
+                    "{{ data_kabupaten.suara_partai_2019 }}",
+                    "{{ data_kabupaten.total_suara_2019 }}",
+                    "{{ data_kabupaten.total_suara_2024 }}",
+                ];
+                var barColors = ["red", "green", "blue", "orange", "brown", "purple", "gray"];
+
+                new Chart("myChart-{{ data_kabupaten.id }}", {
+                    type: "horizontalBar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "Suara Pemilihan Kabupaten {{ data_kabupaten.nama_kabupaten }}"
+                        },
+                        scales: {}
+                    }
+                });
+            </script>
+            <button class="detail-kecamatan" data-target="{{ data_kabupaten.id }}">Detail Kecamatan</button>
+        </div>
+    </div>
+
+    <div class="panel-kecamatan" style="display: none;" data-target="{{ data_kabupaten.id }}">
+        
+        <div class="column">
+            <div class="row">
+                <h6 class="card-subtitle mb-2 text-muted">Detail Kecamatan di Kabupaten {{ data_kabupaten.nama_kabupaten }}</h6>
+                {% for data_kecamatan in data_kabupaten.kecamatan %}
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Kecamatan {{ data_kecamatan.nama_kecamatan }} - {{data_kecamatan.id}}</h6>
+                        <div class="data-table">
+                            <div>
+                                <p class="card-text">Ir. Rudianto Tjen - 2019</p>
+                                <p class="card-text">Ir. Rudianto Tjen - 2024</p>
+                                <p class="card-text">H. Rustam Effendi, S.E. - 2019</p>
+                                <p class="card-text">Irma Fika Adita, S.Kom. - 2019</p>
+                                <p class="card-text">Suara Partai - 2019:</p>
+                                <p class="card-text">Total Suara - 2019</p>
+                                <p class="card-text">Total Suara - 2024</p>
+                            </div>
+                            <div>
+                                <p class="card-text">:  {{ data_kecamatan.suara_calon_1_2019 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.suara_calon_1_2024 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.suara_calon_2_2019 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.suara_calon_3_2019 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.suara_partai_2019 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.total_suara_2019 }}</p>
+                                <p class="card-text">:  {{ data_kecamatan.total_suara_2024 }}</p>
+                            </div>
+                        </div>
+                        <canvas id="myChart-{{ data_kecamatan.id }}" style="width:100%;max-width:800px"></canvas>
+                        <script>
+                            var xValues = [
+                                "Ir. Rudianto Tjen - 2019",
+                                "Ir. Rudianto Tjen - 2024", 
+                                "H. Rustam Effendi, S.E. - 2019", 
+                                "Irma Fika Adita, S.Kom. - 2019", 
+                                "Suara Partai - 2019", 
+                                "Total Suara - 2019",
+                                "Total Suara - 2024",];
+                            var yValues = [
+                                "{{ data_kecamatan.suara_calon_1_2019 }}",
+                                "{{ data_kecamatan.suara_calon_1_2024 }}",
+                                "{{ data_kecamatan.suara_calon_2_2019 }}",
+                                "{{ data_kecamatan.suara_calon_3_2019 }}",
+                                "{{ data_kecamatan.suara_partai_2019 }}",
+                                "{{ data_kecamatan.total_suara_2019 }}",
+                                "{{ data_kecamatan.total_suara_2024 }}",
+                            ];
+                            var barColors = ["red", "green", "blue", "orange", "brown", "purple", "gray"];
+            
+                            new Chart("myChart-{{ data_kecamatan.id }}", {
+                                type: "horizontalBar",
+                                data: {
+                                    labels: xValues,
+                                    datasets: [{
+                                        backgroundColor: barColors,
+                                        data: yValues
+                                    }]
+                                },
+                                options: {
+                                    legend: { display: false },
+                                    title: {
+                                        display: true,
+                                        text: "Suara Pemilihan Kecamatan {{ data_kecamatan.nama_kecamatan }}"
+                                    },
+                                    scales: {}
+                                }
+                            });
+                        </script>
+                        <button class="detail-kelurahan" data-target="{{ data_kecamatan.id }}">Detail Kelurahan</button>
+                    </div>
+                </div>
+
+                <div class="panel-kelurahan" style="display: none;" data-target="{{ data_kecamatan.id }}">
+                    
+                    <div class="column">
+                        <div class="row">
+                            <h6 class="card-subtitle mb-2 text-muted">Detail Kelurahan di Kecamatan {{ data_kecamatan.nama_kecamatan }}</h6>
+                            {% for data_kelurahan in data_kecamatan.kelurahan %}
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2 text-muted">Kelurahan {{ data_kelurahan.nama_kelurahan }}</h6>
+                                        <div class="data-table">
+                                            <div>
+                                                <p class="card-text">Ir. Rudianto Tjen - 2019</p>
+                                                <p class="card-text">Ir. Rudianto Tjen - 2024</p>
+                                                <p class="card-text">H. Rustam Effendi, S.E. - 2019</p>
+                                                <p class="card-text">Irma Fika Adita, S.Kom. - 2019</p>
+                                                <p class="card-text">Suara Partai - 2019:</p>
+                                                <p class="card-text">Total Suara - 2019</p>
+                                                <p class="card-text">Total Suara - 2024</p>
+                                            </div>
+                                            <div>
+                                                <p class="card-text">:  {{ data_kelurahan.suara_calon_1_2019 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.suara_calon_1_2024 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.suara_calon_2_2019 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.suara_calon_3_2019 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.suara_partai_2019 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.total_suara_2019 }}</p>
+                                                <p class="card-text">:  {{ data_kelurahan.total_suara_2024 }}</p>
+                                            </div>
+                                        </div>
+                                        <canvas id="myChart-{{ data_kelurahan.id }}" style="width:100%;max-width:800px"></canvas>
+                                        <script>
+                                            var xValues = [
+                                                "Ir. Rudianto Tjen - 2019",
+                                                "Ir. Rudianto Tjen - 2024", 
+                                                "H. Rustam Effendi, S.E. - 2019", 
+                                                "Irma Fika Adita, S.Kom. - 2019", 
+                                                "Suara Partai - 2019", 
+                                                "Total Suara - 2019",
+                                                "Total Suara - 2024",];
+                                            var yValues = [
+                                                "{{ data_kelurahan.suara_calon_1_2019 }}",
+                                                "{{ data_kelurahan.suara_calon_1_2024 }}",
+                                                "{{ data_kelurahan.suara_calon_2_2019 }}",
+                                                "{{ data_kelurahan.suara_calon_3_2019 }}",
+                                                "{{ data_kelurahan.suara_partai_2019 }}",
+                                                "{{ data_kelurahan.total_suara_2019 }}",
+                                                "{{ data_kelurahan.total_suara_2024 }}",
+                                            ];
+                                            var barColors = ["red", "green", "blue", "orange", "brown", "purple", "gray"];
+                            
+                                            new Chart("myChart-{{ data_kelurahan.id }}", {
+                                                type: "horizontalBar",
+                                                data: {
+                                                    labels: xValues,
+                                                    datasets: [{
+                                                        backgroundColor: barColors,
+                                                        data: yValues
+                                                    }]
+                                                },
+                                                options: {
+                                                    legend: { display: false },
+                                                    title: {
+                                                        display: true,
+                                                        text: "Suara Pemilihan Kelurahan {{ data_kelurahan.nama_kelurahan }}"
+                                                    },
+                                                    scales: {}
+                                                }
+                                            });
+                                        </script>
+
+                                        <button class="detail-tps" data-target="{{ data_kelurahan.id }}">Detail TPS</button>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="panel-tps" style="display: none;" data-target="{{ data_kelurahan.id }}">
+                                    
+                                    <div class="column">
+                                        <div class="row">
+                                            <h6 class="card-subtitle mb-2 text-muted">Detail TPS di Kelurahan {{ data_kelurahan.nama_kelurahan }}</h6>
+                                            {% for data_tps in data_kelurahan.tps %}
+                                                <div class="card shadow">
+                                                    <div class="card-body">
+                                                        <h6 class="card-subtitle mb-2 text-muted">TPS {{ data_tps.nama_tps }} Kelurahan/Desa {{data_kelurahan.nama_kelurahan }} </h6>
+                                                        <div class="data-table">
+                                                            <div>
+                                                                <p class="card-text">Ir. Rudianto Tjen - 2019</p>
+                                                                <p class="card-text">Ir. Rudianto Tjen - 2024</p>
+                                                                <p class="card-text">H. Rustam Effendi, S.E. - 2019</p>
+                                                                <p class="card-text">Irma Fika Adita, S.Kom. - 2019</p>
+                                                                <p class="card-text">Suara Partai - 2019:</p>
+                                                                <p class="card-text">Total Suara - 2019</p>
+                                                                <p class="card-text">Total Suara - 2024</p>
+                                                            </div>
+                                                            <div>
+                                                                <p class="card-text">:  {{ data_tps.suara_calon_1_2019 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.suara_calon_1_2024 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.suara_calon_2_2019 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.suara_calon_3_2019 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.suara_partai_2019 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.total_suara_2019 }}</p>
+                                                                <p class="card-text">:  {{ data_tps.total_suara_2024 }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="myChart-{{ data_tps.id }}" style="width:100%;max-width:800px"></canvas>
+                                                        <script>
+                                                            var xValues = [
+                                                                "Ir. Rudianto Tjen - 2019",
+                                                                "Ir. Rudianto Tjen - 2024", 
+                                                                "H. Rustam Effendi, S.E. - 2019", 
+                                                                "Irma Fika Adita, S.Kom. - 2019", 
+                                                                "Suara Partai - 2019", 
+                                                                "Total Suara - 2019",
+                                                                "Total Suara - 2024",];
+                                                            var yValues = [
+                                                                "{{ data_tps.suara_calon_1_2019 }}",
+                                                                "{{ data_tps.suara_calon_1_2024 }}",
+                                                                "{{ data_tps.suara_calon_2_2019 }}",
+                                                                "{{ data_tps.suara_calon_3_2019 }}",
+                                                                "{{ data_tps.suara_partai_2019 }}",
+                                                                "{{ data_tps.total_suara_2019 }}",
+                                                                "{{ data_tps.total_suara_2024 }}",
+                                                            ];
+                                                            var barColors = ["red", "green", "blue", "orange", "brown", "purple", "gray"];
+                                            
+                                                            new Chart("myChart-{{ data_tps.id }}", {
+                                                                type: "horizontalBar",
+                                                                data: {
+                                                                    labels: xValues,
+                                                                    datasets: [{
+                                                                        backgroundColor: barColors,
+                                                                        data: yValues
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    legend: { display: false },
+                                                                    title: {
+                                                                        display: true,
+                                                                        text: "Suara Pemilihan TPS {{ data_tps.nama_tps }}"
+                                                                    },
+                                                                    scales: {}
+                                                                }
+                                                            });
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    
+
+{% endfor %}
+
+<style>
+    .data-table {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0px;
+    }
+    .card-text {
+        width: 230px;
+        margin: 0;
+        /* border: 1px solid #ddd; */
+    }
+    .detail-kecamatan{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-kecamatan:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .detail-kelurahan{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-kelurahan:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .detail-tps{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-tps:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 390px;
+            display: inline-block;
+    }
+
+    .card-body {
+        margin-bottom: 10px;
+        min-height: 180px; 
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 15px;
+    }
+    .content {
+            margin-left: 0px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    .row {
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        margin-bottom: 10px; 
+        padding-left: 20px;
+    }
+
+
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        const detailKecamatanButtons = document.querySelectorAll('.detail-kecamatan');
+
+        detailKecamatanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kecamatan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailKelurahanButtons = document.querySelectorAll('.detail-kelurahan');
+
+        detailKelurahanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kelurahan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailTpsButtons = document.querySelectorAll('.detail-tps');
+        
+        detailTpsButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-tps[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+    });
+
+    
+  </script>
+
+
+
+
+
+</body>
+</html>
+
+
+{% endblock %}

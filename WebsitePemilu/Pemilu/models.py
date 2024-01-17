@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-# Create your models here.
+import os
+from django.conf import settings
+
 
 # Tabel sebagai baseline data warga
 class DataWarga(models.Model):
@@ -89,7 +91,19 @@ class DataKoordinator(models.Model):
     
     def save(self, *args, **kwargs):
         self.full_clean()
+        
+        nik = str(self.nik)
+        self.foto_ktp.name = f'foto_ktp_{nik}.jpg'
+        
         super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        if self.foto_ktp:
+            file_path = os.path.join(settings.MEDIA_ROOT, str(self.foto_ktp))
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+        super().delete(*args, **kwargs)
     
     def __str__(self):
         return f"{self.nama} - ID: {self.id}"
@@ -135,4 +149,17 @@ class PengaturanWilayah(models.Model):
     kabupaten_belitung_timur = models.BooleanField('Kabupaten Belitung Timur',default=True)
     
 
-    # Tambahkan wilayah lain jika perlu
+class DataPemilu(models.Model):
+    kabupaten = models.CharField(max_length=255)
+    kecamatan = models.CharField(max_length=255)
+    kelurahan = models.CharField(max_length=255)
+    tps = models.CharField(max_length=255)
+    calon_1_2019 = models.IntegerField()
+    calon_2_2019 = models.IntegerField()
+    calon_3_2019 = models.IntegerField()
+    suara_Partai_2019 = models.IntegerField()
+    calon_1_2024 = models.IntegerField()
+    total_suara_2024 = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.kabupaten} - {self.kecamatan} - {self.kelurahan} - {self.tps}"

@@ -12,11 +12,9 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-
-    <!-- Custom styles for this template -->
-
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto:wght@100&family=Water+Brush&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
   </head>
 
   <body>
@@ -75,7 +73,7 @@
                         <!-- <img src="..." class="card-img-top" alt="..."> -->
                         <div class="card-body">
                             <div class="number">{{total_koordinator}}</div>
-                        <div class="description">Koordinator Terdaftar</div>
+                        <div class="description">Koordinator TPS Terdaftar</div>
                         </div>
                     </div>
                 </div>
@@ -84,95 +82,319 @@
                         <!-- <img src="..." class="card-img-top" alt="..."> -->
                         <div class="card-body">
                             <div class="number">{{target_capaian_koordinator|floatformat:3}}%</div>
-                            <div class="description">Target Koordinator Terdaftar</div>
+                            <div class="description">Target Koordinator TPS Terdaftar</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-  
-          <!-- Dukungan Koordinator -->
-          <div class="col-md-12">
+        <div class="col-md-12">
             <h2>Dukungan per Kabupaten</h2>
-            <div class="dukungan-kabupaten">
+            <div class="column">
                 <div class="row">
                     {% for kabupaten, info in informasi_kabupaten.items %}
-
                     <div class="col-md-4">
                         <div class="card shadow">
                             <div class="card-wilayah">
                                 <h3>Kabupaten {{ kabupaten|title }}</h3>
-                                <p>Dukungan Koordinator TPS: {{ info.dukungan_koordinator }}</p>
-                                <p>Target Koordinator: {{ info.target_koordinator }}</p>
-                                <p>Persentase Koordinator: {{ info.persentase_koordinator|floatformat:3 }}%</p>
-                                <p>Dukungan Relawan: {{ info.dukungan_pemilih }}</p>
-                                <p>Target Relawan: {{ info.target_pemilih }}</p>
-                                <p>Persentase Relawan: {{ info.persentase_pemilih|floatformat:3 }}%</p>
-                                <button class="detail-kecamatan">Detail Kecamatan</button>
-                              </div>
-                              <div class="panel-kecamatan">
-                                <div class="panel-content-kecamatan">
-                                    {% for kecamatan, kec_info in info.kecamatan.items %}
-                                        <div class="kecamatan-info">
-                                            <h4>Kecamatan {{ kecamatan|title }}</h4>
-                                            <p>Dukungan Koordinator TPS: {{ kec_info.dukungan_koordinator }}</p>
-                                            <p>Target Koordinator: {{ kec_info.target_koordinator }}</p>
-                                            <p>Persentase Koordinator: {{ kec_info.persentase_koordinator|floatformat:3 }}%</p>
-                                            <p>Dukungan Relawan: {{ kec_info.dukungan_pemilih }}</p>
-                                            <p>Target Relawan: {{ kec_info.target_pemilih }}</p>
-                                            <p>Persentase Relawan: {{ kec_info.persentase_pemilih|floatformat:3 }}%</p>
-                                            <button class="detail-kelurahan">Detail Kelurahan</button>
-                                        </div>
-                                        <div class="panel-kelurahan">
-                                            <div class="panel-content-kelurahan">
-                                                {% for kelurahan, kel_info in kec_info.kelurahan.items %}
-                                                <div class="kelurahan-info">
-                                                    <h4>Kelurahan {{ kelurahan|title }}</h4>
-                                                    <p>Dukungan Koordinator TPS: {{ kel_info.dukungan_koordinator }}</p>
-                                                    <p>Target Koordinator: {{ kel_info.target_koordinator }}</p>
-                                                    <p>Persentase Koordinator: {{ kel_info.persentase_koordinator|floatformat:3 }}%</p>
-                                                    <p>Dukungan Relawan: {{ kel_info.dukungan_pemilih }}</p>
-                                                    <p>Target Relawan: {{ kel_info.target_pemilih }}</p>
-                                                    <p>Persentase Relawan: {{ kel_info.persentase_pemilih|floatformat:3 }}%</p>
-                                                    <button class="detail-tps">Detail TPS</button>
-                                                </div>
-                                                <div class="panel-tps">
-                                                    <div class="panel-content-tps">
-                                                        {% for tps, tps_info in kel_info.tps.items %}
-                                                        <div class="tps-info">
-                                                            <h4>TPS {{ tps }}</h4>
-                                                            <p>Dukungan Koordinator TPS: {{ tps_info.dukungan_koordinator }}</p>
-                                                            <p>Target Koordinator: {{ tps_info.target_koordinator }}</p>
-                                                            <p>Persentase Koordinator: {{ tps_info.persentase_koordinator|floatformat:3 }}%</p>
-                                                            <p>Dukungan Relawan: {{ tps_info.dukungan_pemilih }}</p>
-                                                            <p>Target Relawan: {{ tps_info.target_pemilih }}</p>
-                                                            <p>Persentase Relawan: {{ tps_info.persentase_pemilih|floatformat:3 }}%</p>
-                                                        </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <!-- Loop untuk menampilkan daftar kelurahan -->
-                                                
-                                        </div>
-                                    {% endfor %}
+                                <div class="data-table">
+                                    <div>
+                                        <p class="card-text">Dukungan Koordinator TPS</p>
+                                        <p class="card-text">Target Koordinator TPS</p>
+                                        <p class="card-text">Persentase Koordinator TPS</p>
+                                        <p class="card-text">Dukungan Relawan</p>
+                                        <p class="card-text">Target Relawan</p>
+                                        <p class="card-text">Persentase Relawan</p>
+                                    </div>
+                                    <div>
+                                        <p class="card-text">:  {{ info.dukungan_koordinator }}</p>
+                                        <p class="card-text">:  {{ info.target_koordinator }}</p>
+                                        <p class="card-text">:  {{ info.persentase_koordinator|floatformat:3 }}%</p>
+                                        <p class="card-text">:  {{ info.dukungan_pemilih }}</p>
+                                        <p class="card-text">:  {{ info.target_pemilih }}</p>
+                                        <p class="card-text">:  {{ info.persentase_pemilih|floatformat:3 }}%</p>
+                                    </div>
                                 </div>
+
+                                <canvas id="myChart-{{ info.id }}" style="width:100%;max-width:800px"></canvas>
+                                <script>
+                                    var xValues = [
+                                        "Dukungan Koordinator TPS",
+                                        "Target Koordinator TPS", 
+                                        "Dukungan Relawan", 
+                                        "Target Relawan", 
+                                        ];
+                                    var yValues = [
+                                        "{{ info.dukungan_koordinator }}",
+                                        "{{ info.target_koordinator }}",
+                                        "{{ info.dukungan_pemilih }}",
+                                        "{{ info.target_pemilih }}",
+
+                                    ];
+                                    var barColors = ["red", "green", "blue", "orange", ];
+                    
+                                    new Chart("myChart-{{ info.id }}", {
+                                        type: "horizontalBar",
+                                        data: {
+                                            labels: xValues,
+                                            datasets: [{
+                                                backgroundColor: barColors,
+                                                data: yValues
+                                            }]
+                                        },
+                                        options: {
+                                            legend: { display: false },
+                                            title: {
+                                                display: true,
+                                                text: "Data Capaian Kabupaten {{ kabupaten|title }}"
+                                            },
+                                            scales: {}
+                                        }
+                                    });
+                                </script>
+    
+                                <button class="detail-kecamatan" data-target="{{ info.id }}">Detail Kecamatan</button>
                             </div>
                         </div>
                     </div>
-                    {% empty %}
-                    <p>Tidak ada data dukungan koordinator yang tersedia.</p>
-                {% endfor %}
+                    
+    
+                    <div class="panel-kecamatan" style="display: none;" data-target="{{ info.id }}">
+                        <div class="column">
+                            <div class="row">
+                                <h6 class="card-subtitle mb-2 text-muted">Detail Kecamatan di Kabupaten {{ kabupaten|title }}</h6>
+                                {% for kecamatan, kec_info in info.kecamatan.items %}
+                                <div class="col-md-4">
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <h4>Kecamatan {{ kecamatan|title }}</h4>
+                                            <div class="data-table">
+                                                <div>
+                                                    <p class="card-text">Dukungan Koordinator TPS</p>
+                                                    <p class="card-text">Target Koordinator TPS</p>
+                                                    <p class="card-text">Persentase Koordinator TPS</p>
+                                                    <p class="card-text">Dukungan Relawan</p>
+                                                    <p class="card-text">Target Relawan</p>
+                                                    <p class="card-text">Persentase Relawan</p>
+                                                </div>
+                                                <div>
+                                                    <p class="card-text">:  {{ kec_info.dukungan_koordinator }}</p>
+                                                    <p class="card-text">:  {{ kec_info.target_koordinator }}</p>
+                                                    <p class="card-text">:  {{ kec_info.persentase_koordinator|floatformat:3 }}%</p>
+                                                    <p class="card-text">:  {{ kec_info.dukungan_pemilih }}</p>
+                                                    <p class="card-text">:  {{ kec_info.target_pemilih }}</p>
+                                                    <p class="card-text">:  {{ kec_info.persentase_pemilih|floatformat:3 }}%</p>
+                                                </div>
+                                            </div>
+
+                                            <canvas id="myChart-{{ kec_info.id }}" style="width:100%;max-width:800px"></canvas>
+                                            <script>
+                                                var xValues = [
+                                                    "Dukungan Koordinator TPS",
+                                                    "Target Koordinator TPS", 
+                                                    "Dukungan Relawan", 
+                                                    "Target Relawan", 
+                                                    ];
+                                                var yValues = [
+                                                    "{{ kec_info.dukungan_koordinator }}",
+                                                    "{{ kec_info.target_koordinator }}",
+                                                    "{{ kec_info.dukungan_pemilih }}",
+                                                    "{{ kec_info.target_pemilih }}",
+
+                                                ];
+                                                var barColors = ["red", "green", "blue", "orange", ];
+                                
+                                                new Chart("myChart-{{ kec_info.id }}", {
+                                                    type: "horizontalBar",
+                                                    data: {
+                                                        labels: xValues,
+                                                        datasets: [{
+                                                            backgroundColor: barColors,
+                                                            data: yValues
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        legend: { display: false },
+                                                        title: {
+                                                            display: true,
+                                                            text: "Data Capaian Kecamatan {{ kecamatan|title }}"
+                                                        },
+                                                        scales: {}
+                                                    }
+                                                });
+                                            </script>
+    
+                                            <button class="detail-kelurahan" data-target="{{ kec_info.id }}">Detail Kelurahan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+    
+                                <div class="panel-kelurahan" style="display: none;" data-target="{{ kec_info.id }}">
+                                    <div class="column">
+                                        <div class="row">
+                                            <h6 class="card-subtitle mb-2 text-muted">Detail Kelurahan di Kecamatan {{ kecamatan|title }}</h6>
+                                            {% for kelurahan, kel_info in kec_info.kelurahan.items %}
+                                            <div class="col-md-4">
+                                                <div class="card shadow">
+                                                    <div class="card-body">
+                                                        <h4>Kelurahan {{ kelurahan|title }}</h4>
+                                                        <div class="data-table">
+                                                            <div>
+                                                                <p class="card-text">Dukungan Koordinator TPS</p>
+                                                                <p class="card-text">Target Koordinator TPS</p>
+                                                                <p class="card-text">Persentase Koordinator TPS</p>
+                                                                <p class="card-text">Dukungan Relawan</p>
+                                                                <p class="card-text">Target Relawan</p>
+                                                                <p class="card-text">Persentase Relawan</p>
+                                                            </div>
+                                                            <div>
+                                                                <p class="card-text">:  {{ kel_info.dukungan_koordinator }}</p>
+                                                                <p class="card-text">:  {{ kel_info.target_koordinator }}</p>
+                                                                <p class="card-text">:  {{ kel_info.persentase_koordinator|floatformat:3 }}%</p>
+                                                                <p class="card-text">:  {{ kel_info.dukungan_pemilih }}</p>
+                                                                <p class="card-text">:  {{ kel_info.target_pemilih }}</p>
+                                                                <p class="card-text">:  {{ kel_info.persentase_pemilih|floatformat:3 }}%</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <canvas id="myChart-{{ kel_info.id }}" style="width:100%;max-width:800px"></canvas>
+                                                        <script>
+                                                            var xValues = [
+                                                                "Dukungan Koordinator TPS",
+                                                                "Target Koordinator TPS", 
+                                                                "Dukungan Relawan", 
+                                                                "Target Relawan", 
+                                                                ];
+                                                            var yValues = [
+                                                                "{{ kel_info.dukungan_koordinator }}",
+                                                                "{{ kel_info.target_koordinator }}",
+                                                                "{{ kel_info.dukungan_pemilih }}",
+                                                                "{{ kel_info.target_pemilih }}",
+
+                                                            ];
+                                                            var barColors = ["red", "green", "blue", "orange", ];
+                                            
+                                                            new Chart("myChart-{{ kel_info.id }}", {
+                                                                type: "horizontalBar",
+                                                                data: {
+                                                                    labels: xValues,
+                                                                    datasets: [{
+                                                                        backgroundColor: barColors,
+                                                                        data: yValues
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    legend: { display: false },
+                                                                    title: {
+                                                                        display: true,
+                                                                        text: "Data Capaian Kelurahan {{ kelurahan|title }}"
+                                                                    },
+                                                                    scales: {}
+                                                                }
+                                                            });
+                                                        </script>
+
+                                                        <button class="detail-tps" data-target="{{ kel_info.id }}">Detail TPS</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+    
+                                            <div class="panel-tps" style="display: none;" data-target="{{ kel_info.id }}">
+                                                <div class="column">
+                                                    <div class="row">
+                                                        <h6 class="card-subtitle mb-2 text-muted">Detail TPS di Kelurahan {{ kelurahan|title }}</h6>
+                                                        {% for tps, tps_info in kel_info.tps.items %}
+                                                        <div class="col-md-4">
+                                                            <div class="card shadow">
+                                                                <div class="card-body">
+                                                                    <h4>TPS {{ tps }}</h4>
+                                                                    <div class="data-table">
+                                                                        <div>
+                                                                            <p class="card-text">Dukungan Koordinator TPS</p>
+                                                                            <p class="card-text">Target Koordinator TPS</p>
+                                                                            <p class="card-text">Persentase Koordinator TPS</p>
+                                                                            <p class="card-text">Dukungan Relawan</p>
+                                                                            <p class="card-text">Target Relawan</p>
+                                                                            <p class="card-text">Persentase Relawan</p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p class="card-text">:  {{ tps_info.dukungan_koordinator }}</p>
+                                                                            <p class="card-text">:  {{ tps_info.target_koordinator }}</p>
+                                                                            <p class="card-text">:  {{ tps_info.persentase_koordinator|floatformat:3 }}%</p>
+                                                                            <p class="card-text">:  {{ tps_info.dukungan_pemilih }}</p>
+                                                                            <p class="card-text">:  {{ tps_info.target_pemilih }}</p>
+                                                                            <p class="card-text">:  {{ tps_info.persentase_pemilih|floatformat:3 }}%</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <canvas id="myChart-{{ tps_info.id }}" style="width:100%;max-width:800px"></canvas>
+                                                                    <script>
+                                                                        var xValues = [
+                                                                            "Dukungan Koordinator TPS",
+                                                                            "Target Koordinator TPS", 
+                                                                            "Dukungan Relawan", 
+                                                                            "Target Relawan", 
+                                                                            ];
+                                                                        var yValues = [
+                                                                            "{{ tps_info.dukungan_koordinator }}",
+                                                                            "{{ tps_info.target_koordinator }}",
+                                                                            "{{ tps_info.dukungan_pemilih }}",
+                                                                            "{{ tps_info.target_pemilih }}",
+
+                                                                        ];
+                                                                        var barColors = ["red", "green", "blue", "orange", ];
+                                                        
+                                                                        new Chart("myChart-{{ tps_info.id }}", {
+                                                                            type: "horizontalBar",
+                                                                            data: {
+                                                                                labels: xValues,
+                                                                                datasets: [{
+                                                                                    backgroundColor: barColors,
+                                                                                    data: yValues
+                                                                                }]
+                                                                            },
+                                                                            options: {
+                                                                                legend: { display: false },
+                                                                                title: {
+                                                                                    display: true,
+                                                                                    text: "Data Capaian TPS {{ tps }}"
+                                                                                },
+                                                                                scales: {}
+                                                                            }
+                                                                        });
+                                                                    </script>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+    
+                    {% endfor %}
                 </div>
-                
             </div>
         </div>
         
+
+
+
       </div>
   </div>
-   <!-- /container -->
+
 
 
     <footer class="container-fluid">
@@ -276,38 +498,42 @@
     }
 
     .detail-kecamatan{
+        margin-top: 10px;
         background-color: #525FE1;
         color: #ffffff; 
         border: none; 
-        padding: 10px 20px; 
+        padding: 6px 12px;
         border-radius: 5px; 
-        height: fit-content;
+        height: 35px;
+        text-decoration: none; 
     }
     .detail-kecamatan:hover {
         background-color: rgb(59, 69, 176); 
     }
 
     .detail-kelurahan{
+        margin-top: 10px;
         background-color: #525FE1; 
         color: #ffffff;
         border: none; 
-        padding: 10px 20px; 
+        padding: 6px 12px;
         border-radius: 5px; 
-        height: fit-content;
-        margin-bottom: 20px;
+        height: 35px;
+        text-decoration: none; 
     }
     .detail-kelurahan:hover {
         background-color: rgb(59, 69, 176); 
     }
 
     .detail-tps{
+        margin-top: 10px;
         background-color: #525FE1;
         color: #ffffff; 
         border: none; 
-        padding: 10px 20px; 
+        padding: 6px 12px;
         border-radius: 5px; 
-        height: fit-content;
-        margin-bottom: 20px;
+        height: 35px;
+        text-decoration: none;
     }
     .detail-tps:hover {
         background-color: rgb(59, 69, 176); 
@@ -318,83 +544,91 @@
         padding: 10px;
         cursor: pointer;
     }
+
     .panel-kecamatan {
-        display: none;
+        margin-bottom: 30px;
     }
-    .panel-content-kecamatan {
-        padding: 10px;
-        padding-left: 20px;
-    }
+
     .panel-kelurahan {
-        display: none; 
+        margin-bottom: 30px;
     }
-    .panel-content-kelurahan {
-        padding: 10px;
-    }
+
     .panel-tps {
-        display: none; 
+        margin-bottom: 30px;
     }
-    .panel-content-tps {
-        padding: 10px;
-    }
+
+    .data-table {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-gap: 10px;
+    margin-bottom: 0px;
+}
+
+
 
       </style>
 
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const detailKecamatanButtons = document.querySelectorAll('.detail-kecamatan');
-            
-            detailKecamatanButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    const panelKecamatan = button.parentElement.nextElementSibling;
-
-                    if (panelKecamatan) {
-                        if (panelKecamatan.style.display === 'block') {
-                            panelKecamatan.style.display = 'none';
-                        } else {
-                            panelKecamatan.style.display = 'block';
-                        }
-                    }
-                });
-            });
-
-            const detailKelurahanButtons = document.querySelectorAll('.detail-kelurahan');
-            
-            detailKelurahanButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    const panelKelurahan = button.parentElement.nextElementSibling;
-
-                    if (panelKelurahan) {
-                        if (panelKelurahan.style.display === 'block') {
-                            panelKelurahan.style.display = 'none';
-                        } else {
-                            panelKelurahan.style.display = 'block';
-                        }
-                    }
-                });
-            });
-
-            const detailTpsButtons = document.querySelectorAll('.detail-tps');
-            
-            detailTpsButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    const panelTps = button.parentElement.nextElementSibling;
-
-                    if (panelTps) {
-                        if (panelTps.style.display === 'block') {
-                            panelTps.style.display = 'none';
-                        } else {
-                            panelTps.style.display = 'block';
-                        }
-                    }
-                });
-            });
-
-
-        });
-
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
         
-      </script>
+        const detailKecamatanButtons = document.querySelectorAll('.detail-kecamatan');
+
+        detailKecamatanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kecamatan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailKelurahanButtons = document.querySelectorAll('.detail-kelurahan');
+
+        detailKelurahanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kelurahan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailTpsButtons = document.querySelectorAll('.detail-tps');
+        
+        detailTpsButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-tps[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+    });
+
+    
+  </script>
 
 </html>
 

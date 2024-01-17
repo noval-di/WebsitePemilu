@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Wilayah Pemilu 2024</title>
+</head>
+<body>
+<h3>Data Hasil Pemilu</h3>
+
+{% for kabupaten in data_kabupaten %}
+<div class="card shadow">
+    <div class="card-body">
+        <h2>{{ kabupaten.kabupaten_name }}</h2>
+        <button class="detail-kecamatan" data-target="{{ kabupaten.kabupaten_id }}">Detail Kecamatan</button>
+    </div>
+</div>
+
+<div class="panel-kecamatan" style="display: none;" data-target="{{ kabupaten.kabupaten_id }}">
+    
+    <div class="column">
+        <div class="row">
+            <h6 class="card-subtitle mb-2 text-muted">Detail Kecamatan di Kabupaten {{ kabupaten.kabupaten_name }}</h6>
+            {% for kecamatan in kabupaten.kecamatan_data %}
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 ">Kecamatan {{ kecamatan.kecamatan_name }}</h6>
+
+                    <button class="detail-kelurahan" data-target="{{ kecamatan.kecamatan_id }}">Detail Kelurahan</button>
+                </div>
+            </div>
+
+            <div class="panel-kelurahan" style="display: none;" data-target="{{ kecamatan.kecamatan_id }}">
+                <h6 class="card-subtitle mb-2 text-muted">Detail Kelurahan di Kecamatan {{ kecamatan.kecamatan_name }}</h6>
+                <div class="column">
+                    <div class="row">
+                        {% for kelurahan in kecamatan.kelurahan_data %}
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2">Kelurahan {{ kelurahan.kelurahan_name }}</h6>
+                                    <ul>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama TPS</th>
+                                                    <th>Suara Calon 1 2024</th>
+                                                    <th>Total Suara 2024</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for tps in kelurahan.tps_data %}
+                                                    <tr>
+                                                        <td>{{ tps.tps }}</td>
+                                                        <td>{{ tps.calon_1_2024 }}</td>
+                                                        <td>{{ tps.total_suara_2024 }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </ul>
+                                    <a href="{% url 'isi_hasil_pemilu' kelurahan_name=kelurahan.kelurahan_name %}" class="btn-style-2">Isi Hasil Pemilu 2024</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+    
+<style>
+    .data-table {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0px;
+    }
+    .card-text {
+        width: 230px;
+        margin: 0;
+        /* border: 1px solid #ddd; */
+    }
+    .detail-kecamatan{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-kecamatan:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .detail-kelurahan{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-kelurahan:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .detail-tps{
+        background-color: #525FE1;
+        color: #ffffff; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        height: fit-content;
+    }
+    .detail-tps:hover {
+        background-color: rgb(59, 69, 176); 
+    }
+    .card {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 10px;
+            width: 400px;
+            display: inline-block;
+            margin: 10px;
+    }
+
+    .card-body {
+        margin-bottom: 10px;
+        min-height: 100px; 
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 15px;
+    }
+    .content {
+            margin-left: 0px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    .row {
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        margin-bottom: 10px; 
+        padding-left: 20px;
+    }
+    .btn-style-2{
+        background-color: #F86F03; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-2:hover {
+        background-color: #c75600; 
+        color: #ffffff;
+        text-decoration: none; 
+    }
+
+
+</style>   
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        const detailKecamatanButtons = document.querySelectorAll('.detail-kecamatan');
+
+        detailKecamatanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kecamatan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailKelurahanButtons = document.querySelectorAll('.detail-kelurahan');
+
+        detailKelurahanButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-kelurahan[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+        const detailTpsButtons = document.querySelectorAll('.detail-tps');
+        
+        detailTpsButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const panel = document.querySelector(`.panel-tps[data-target="${targetId}"]`);
+
+                    if (panel) {
+                        if (panel.style.display === 'block') {
+                            panel.style.display = 'none';
+                        } else {
+                            panel.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+
+    });
+
+    
+  </script>
+</body>
+</html>
+
+
+{% endblock %}

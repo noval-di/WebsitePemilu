@@ -19,6 +19,9 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
+
+                        <!-- Tautan untuk mengunduh foto -->
+                        <a href="{{ form.instance.foto_ktp.url }}" download>Unduh Foto KTP</a>
                         <div class="float-end mt-2"  >
                             <button class="btn btn-sm btn-primary" type="submit">Simpan Perubahan</button>
                             <a href="{% url 'data_koordinator' %}" class="btn btn-sm btn-primary">Kembali ke Data Koordinator</a>

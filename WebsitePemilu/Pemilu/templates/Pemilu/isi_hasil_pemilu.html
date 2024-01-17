@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- dashboard.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analisa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+
+<h3>Form Hasil Pemilu </h3>
+
+<div class="card shadow">
+    <div class="card-body">
+        <h4>Kelurahan {{ kelurahan_name }}</h4>
+        <form id="form-id" method="post">
+            {% csrf_token %}
+            
+            <div class="form-table">
+                {% for tps_name in tps_names %}
+                    <div class="form-tps">
+                        <h5>TPS {{ tps_name }}</h5>
+                        {% for form in forms %}
+                            {% if form.prefix == tps_name %}
+                                <div class="form-row">
+                                    <div class="form-label">
+                                        <label for="{{ form.calon_1_2024.id_for_label }}" id="label-calon-1-{{ tps_name }}">Calon 1 2024:</label>
+                                    </div>
+                                    <div class="form-field">
+                                        {{ form.calon_1_2024 }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-label">
+                                        <label for="{{ form.total_suara_2024.id_for_label }}" id="label-total-suara-{{ tps_name }}">Total Suara 2024:</label>
+                                    </div>
+                                    <div class="form-field">
+                                        {{ form.total_suara_2024 }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="button-container">
+                <button type="submit" class="btn-style-1">Simpan Hasil Pemilu</button>
+                <a href="{% url 'list_wilayah' %}" class="btn-style-2"> Data Hasil Pemilu</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="popupMessageModal" tabindex="-1" role="dialog" aria-labelledby="popupMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="popupMessageModalLabel">Pesan</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="popup-message-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.form-tps{
+    margin-bottom: 20px;
+}
+.form-table {
+        display: table;
+        width: 100%;
+    }
+
+    .form-row {
+        display: table-row;
+        margin-bottom: 10px;
+    }
+
+    .form-label, .form-field {
+        display: table-cell;
+        padding: 8px;
+    }
+
+.content {
+    margin-left: 0px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+    .card {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 10px;
+            display: inline-block;
+            margin: 10px;
+    }
+    .btn-style-1{
+        background-color: #525FE1; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 5px;
+        height: 35px;
+        text-decoration: none; 
+
+    }
+    .btn-style-1:hover {
+        background-color: rgb(59, 69, 176); 
+        color: #ffffff; 
+        text-decoration: none; 
+    }
+    .btn-style-2{
+        background-color: #F86F03; 
+        color: #ffffff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 5px; 
+        height: 35px;
+        text-decoration: none; 
+    }
+    .btn-style-2:hover {
+        background-color: #c75600; 
+        color: #ffffff;
+        text-decoration: none; 
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+    }
+    .bg-berhasil {
+    background-color: rgb(95, 193, 98); 
+    color: #fff; 
+}
+
+    .bg-tidak-berhasil {
+        background-color: #d25f57; 
+        color: #fff; 
+    }
+</style>
+
+
+<script>
+    document.getElementById('form-id').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        var formData = new FormData(this);
+        var kelurahan_name = "{{ kelurahan_name }}";
+        fetch('/isi-hasil-pemilu/' + kelurahan_name + '/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                document.getElementById('popup-message-body').classList.remove('bg-tidak-berhasil'); // Menghapus kelas warna merah
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-berhasil');
+                $('#popupMessageModal').on('hidden.bs.modal', function (e) {
+                    closePopupModal();
+                });
+            } else {
+                document.getElementById('popup-message-body').innerHTML = data.message;
+                $('#popupMessageModal .modal-body').addClass('bg-tidak-berhasil');
+            }
+            $('#popupMessageModal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    function closePopupModal() {
+        $('#popupMessageModal').modal('hide');
+    }
+    </script>
+
+</body>
+</html>
+
+
+{% endblock %}

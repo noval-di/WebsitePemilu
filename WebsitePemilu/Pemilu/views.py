@@ -51,6 +51,7 @@ def dashboard(request):
     for kabupaten, setting in kabupaten_settings.items():
         if setting:
             informasi_kabupaten[kabupaten] = {
+                'id': f'kabupaten_{kabupaten.lower().replace(" ", "_")}',
                 'dukungan_koordinator': 0,
                 'target_koordinator': 0,
                 'persentase_koordinator': 0.0,
@@ -63,6 +64,7 @@ def dashboard(request):
             
             for kecamatan in kecamatan_kabupaten:
                 informasi_kabupaten[kabupaten]['kecamatan'][kecamatan['kecamatan']] = {
+                    'id': f'kecamatan_{kabupaten.lower().replace(" ", "_")}_{kecamatan["kecamatan"].lower().replace(" ", "_")}',
                     'dukungan_koordinator': 0,
                     'target_koordinator': 0,
                     'persentase_koordinator': 0.0,
@@ -76,6 +78,7 @@ def dashboard(request):
 
                 for kelurahan in kelurahan_kecamatan:
                     informasi_kabupaten[kabupaten]['kecamatan'][kecamatan['kecamatan']]['kelurahan'][kelurahan['kelurahan']] = {
+                        'id': f'kelurahan_{kabupaten.lower().replace(" ", "_")}_{kecamatan["kecamatan"].lower().replace(" ", "_")}_{kelurahan["kelurahan"].lower().replace(" ", "_")}',
                         'dukungan_koordinator': 0,
                         'target_koordinator': 0,
                         'persentase_koordinator': 0.0,
@@ -94,6 +97,7 @@ def dashboard(request):
                         total_target_pemilih_tps = 30
                         
                         informasi_kabupaten[kabupaten]['kecamatan'][kecamatan['kecamatan']]['kelurahan'][kelurahan['kelurahan']]['tps'][tps['tps']] = {
+                            'id': f'tps_{kabupaten.lower().replace(" ", "_")}_{kecamatan["kecamatan"].lower().replace(" ", "_")}_{kelurahan["kelurahan"].lower().replace(" ", "_")}_{tps["tps"]}',
                             'dukungan_koordinator': total_koordinators_tps,
                             'target_koordinator': total_target_koordinator_tps,
                             'persentase_koordinator': (total_koordinators_tps / total_target_koordinator_tps) * 100 if total_target_koordinator_tps else 0,
@@ -634,3 +638,174 @@ def user_logout(request):
 
 def redirect_to_login(request):
     return redirect('login_user') 
+
+
+from Pemilu.models import DataPemilu
+from django.db.models import Count, Sum
+
+@login_required
+def analisa (request):
+    kabupaten_data = DataPemilu.objects.values('kabupaten').distinct()
+    
+    data_by_kabupaten = []
+    for kabupaten in kabupaten_data:
+        kabupaten_name = kabupaten['kabupaten'].strip()
+        print(kabupaten_name)
+        data_kabupaten = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten']).aggregate(
+            suara_calon_1_2019=Sum('calon_1_2019'),
+            suara_calon_2_2019=Sum('calon_2_2019'),
+            suara_calon_3_2019=Sum('calon_3_2019'),
+            suara_partai_2019=Sum('suara_Partai_2019'),
+            total_suara_2019=Sum('calon_1_2019') + Sum('calon_2_2019') + Sum('calon_3_2019') + Sum('suara_Partai_2019'),
+            suara_calon_1_2024=Sum('calon_1_2024'),
+            total_suara_2024=Sum('total_suara_2024'),
+        )
+        data_kabupaten.update({'nama_kabupaten': kabupaten_name, 'id': kabupaten['kabupaten']})
+
+        kecamatan_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten']).values('kecamatan').distinct()
+    
+        data_kabupaten['kecamatan'] = []
+        for kecamatan in kecamatan_data:
+            kecamatan_name = kecamatan['kecamatan'].strip()
+            data_kecamatan = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name).aggregate(
+                suara_calon_1_2019=Sum('calon_1_2019'),
+                suara_calon_2_2019=Sum('calon_2_2019'),
+                suara_calon_3_2019=Sum('calon_3_2019'),
+                suara_partai_2019=Sum('suara_Partai_2019'),
+                total_suara_2019=Sum('calon_1_2019') + Sum('calon_2_2019') + Sum('calon_3_2019') + Sum('suara_Partai_2019'),
+                suara_calon_1_2024=Sum('calon_1_2024'),
+                total_suara_2024=Sum('total_suara_2024'),
+            )
+            data_kecamatan.update({'nama_kecamatan': kecamatan_name, 'id': f"{kabupaten_name}_{kecamatan_name}"})
+            data_kabupaten['kecamatan'].append(data_kecamatan)
+            
+            kelurahan_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name).values('kelurahan').distinct()
+            data_kecamatan['kelurahan'] = []
+
+            for kelurahan in kelurahan_data:
+                kelurahan_name = kelurahan['kelurahan'].strip()
+                data_kelurahan = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name).aggregate(
+                    suara_calon_1_2019=Sum('calon_1_2019'),
+                    suara_calon_2_2019=Sum('calon_2_2019'),
+                    suara_calon_3_2019=Sum('calon_3_2019'),
+                    suara_partai_2019=Sum('suara_Partai_2019'),
+                    total_suara_2019=Sum('calon_1_2019') + Sum('calon_2_2019') + Sum('calon_3_2019') + Sum('suara_Partai_2019'),
+                    suara_calon_1_2024=Sum('calon_1_2024'),
+                    total_suara_2024=Sum('total_suara_2024'),
+                )
+                data_kelurahan.update({'nama_kelurahan': kelurahan_name, 'id': f"{kecamatan_name}_{kelurahan_name}"})
+                data_kecamatan['kelurahan'].append(data_kelurahan)
+
+                tps_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name).values('tps').distinct()
+                data_kelurahan['tps'] = []
+
+                for tps in tps_data:
+                    tps_name = tps['tps'].strip()
+                   
+                    data_tps = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name, tps=tps_name).aggregate(
+                        suara_calon_1_2019=Sum('calon_1_2019'),
+                        suara_calon_2_2019=Sum('calon_2_2019'),
+                        suara_calon_3_2019=Sum('calon_3_2019'),
+                        suara_partai_2019=Sum('suara_Partai_2019'),
+                        total_suara_2019=Sum('calon_1_2019') + Sum('calon_2_2019') + Sum('calon_3_2019') + Sum('suara_Partai_2019'),
+                        suara_calon_1_2024=Sum('calon_1_2024'),
+                        total_suara_2024=Sum('total_suara_2024'),
+                    )
+                    data_tps.update({'nama_tps': tps_name, 'id': f"{kelurahan_name}_{tps_name}"})
+                    data_kelurahan['tps'].append(data_tps)
+
+
+        data_by_kabupaten.append(data_kabupaten)
+        
+    context = {
+
+        'data_by_kabupaten' : data_by_kabupaten,
+        'kabupaten_terpilih': request.GET.get('kabupaten'),
+        'kecamatan_terpilih': request.GET.get('kecamatan'),
+        'kelurahan_terpilih': request.GET.get('kelurahan'),
+    }
+        
+    return render(request, 'Pemilu/analisa.html',context)
+
+from .forms import DataPemiluForm
+
+@login_required
+def list_wilayah(request):
+    kabupaten_data = DataPemilu.objects.values('kabupaten').distinct()
+    
+    data_kabupaten = []
+    for kabupaten in kabupaten_data:
+        kabupaten_name = kabupaten['kabupaten'].strip()
+        kecamatan_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten']).values('kecamatan').distinct()
+        
+        data_kecamatan = []
+        for kecamatan in kecamatan_data:
+            kecamatan_name = kecamatan['kecamatan'].strip()
+            kelurahan_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name).values('kelurahan').distinct()
+
+            data_kelurahan = []
+            for kelurahan in kelurahan_data:
+                kelurahan_name = kelurahan['kelurahan'].strip()
+                tps_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name)
+
+                tps_data = sorted(tps_data, key=lambda x: int(x.tps))
+
+                data_kelurahan.append({
+                    'kelurahan_name': kelurahan_name,
+                    'tps_data': tps_data,
+                    'kelurahan_id': f'kelurahan_{kabupaten_name}_{kecamatan_name}_{kelurahan_name}'
+                })
+
+            data_kecamatan.append({
+                'kecamatan_name': kecamatan_name,
+                'kelurahan_data': data_kelurahan,
+                'kecamatan_id': f'kecamatan_{kabupaten_name}_{kecamatan_name}'
+            })
+
+        data_kabupaten.append({
+            'kabupaten_name': kabupaten_name,
+            'kecamatan_data': data_kecamatan,
+            'kabupaten_id': f'kabupaten_{kabupaten_name}'
+        })
+        
+    context = {
+    'data_kabupaten': data_kabupaten
+    }
+    
+    return render(request, 'Pemilu/list_wilayah.html', context)
+
+# views.py
+
+from django.shortcuts import render, get_object_or_404
+from .models import DataPemilu
+from .forms import DataPemiluForm
+
+from .forms import DataPemiluForm
+# views.py
+
+@login_required
+def isi_hasil_pemilu(request, kelurahan_name):
+    data_pemilu = DataPemilu.objects.filter(kelurahan=kelurahan_name)
+
+    if request.method == 'POST':
+        forms = [DataPemiluForm(request.POST, instance=pemilu, prefix=pemilu.tps) for pemilu in data_pemilu]
+        if all(form.is_valid() for form in forms):
+            for form in forms:
+                form.save()
+            return JsonResponse({'success': True, 'message': 'Data berhasil ditambahkan'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Gagal menyimpan data'}, status=400)
+
+    else:
+        forms = [DataPemiluForm(instance=pemilu, prefix=pemilu.tps) for pemilu in data_pemilu]
+
+    tps_names = sorted(set(pemilu.tps for pemilu in data_pemilu), key=lambda x: int(x))
+
+    context = {
+        'data_pemilu': data_pemilu,
+        'forms': forms,
+        'kelurahan_name': kelurahan_name,
+        'tps_names': tps_names,
+    }
+
+    return render(request, 'Pemilu/isi_hasil_pemilu.html', context)
