@@ -696,11 +696,14 @@ def analisa (request):
                 data_kelurahan.update({'nama_kelurahan': kelurahan_name, 'id': f"{kecamatan_name}_{kelurahan_name}"})
                 data_kecamatan['kelurahan'].append(data_kelurahan)
 
-                tps_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name).values('tps').distinct()
+                tps_data = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name).values('tps').distinct().order_by('tps')
+                
+                tps_names = sorted((tps['tps'].strip() for tps in tps_data), key=lambda x: (int(x) if x.isdigit() else x))
+                
                 data_kelurahan['tps'] = []
 
-                for tps in tps_data:
-                    tps_name = tps['tps'].strip()
+                for tps in tps_names:
+                    tps_name = tps.strip()
                    
                     data_tps = DataPemilu.objects.filter(kabupaten=kabupaten['kabupaten'], kecamatan=kecamatan_name, kelurahan=kelurahan_name, tps=tps_name).aggregate(
                         suara_calon_1_2019=Sum('calon_1_2019'),
@@ -713,7 +716,7 @@ def analisa (request):
                     )
                     data_tps.update({'nama_tps': tps_name, 'id': f"{kelurahan_name}_{tps_name}"})
                     data_kelurahan['tps'].append(data_tps)
-
+                
 
         data_by_kabupaten.append(data_kabupaten)
         
@@ -723,6 +726,7 @@ def analisa (request):
         'kabupaten_terpilih': request.GET.get('kabupaten'),
         'kecamatan_terpilih': request.GET.get('kecamatan'),
         'kelurahan_terpilih': request.GET.get('kelurahan'),
+
     }
         
     return render(request, 'Pemilu/analisa.html',context)
