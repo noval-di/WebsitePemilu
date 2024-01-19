@@ -9,7 +9,7 @@ django.setup()
 from Pemilu.models import DataPemilu
 
 def import_data():
-    excel_file = '/home/noval/Desktop/Aplikasi Pemenangan Caleg/Belitung_2019.xlsx'
+    excel_file = '/home/ubuntu/belitung_belitung_timur_2019.xlsx'
     excel_data = pd.read_excel(excel_file)
 
     for index, row in excel_data.iterrows():

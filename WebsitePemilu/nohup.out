@@ -3744,3 +3744,779 @@ Not Found: /favicon.ico
 [17/Jan/2024 11:29:52,276] - Broken pipe from ('182.2.165.43', 45530)
 [17/Jan/2024 11:29:52,276] - Broken pipe from ('182.2.165.43', 45532)
 [17/Jan/2024 14:44:49] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 18:26:07] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 18:26:07] "GET /login/ HTTP/1.1" 200 2904
+/home/ubuntu/website/WebsitePemilu/WebsitePemilu/Pemilu/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 05, 2024 - 18:36:37
+Django version 5.0, using settings 'WebsitePemilu.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+adminutama2
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login gagal
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+Watching for file changes with StatReloader
+[17/Jan/2024 18:26:51] code 400, message Bad request version ('X¶¬')
+[17/Jan/2024 18:26:51] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:26:51] code 400, message Bad request version ('IÊò?Þä\x8dãèFKÄYüüR÷Ø¼Ò\x91^4\x83\x88j\x94\x8bÍ\x00')
+[17/Jan/2024 18:26:51] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:26:51] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 18:26:51] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[17/Jan/2024 18:26:52] "GET /favicon.ico HTTP/1.1" 404 5516
+[17/Jan/2024 18:26:58] code 400, message Bad request version ('\x88¸ä¸Þ×$Û\x9c×ìom\x14\x00')
+[17/Jan/2024 18:26:58] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:26:58] code 400, message Bad request version ('}*@\x95Sëc')
+[17/Jan/2024 18:26:58] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:26:58] "POST /login/ HTTP/1.1" 302 0
+[17/Jan/2024 18:27:37] "GET /dashboard/ HTTP/1.1" 200 5860507
+[17/Jan/2024 18:29:58] "GET /data-koordinator/ HTTP/1.1" 200 16391
+Internal Server Error: /list-wilayah/
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.UndefinedTable: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/home/ubuntu/website/WebsitePemilu/WebsitePemilu/Pemilu/views.py", line 737, in list_wilayah
+    for kabupaten in kabupaten_data:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 1926, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 208, in __iter__
+    for row in compiler.results_iter(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1513, in results_iter
+    results = self.execute_sql(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+[17/Jan/2024 18:30:03] "GET /list-wilayah/ HTTP/1.1" 500 123084
+Internal Server Error: /analisa/
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.UndefinedTable: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/home/ubuntu/website/WebsitePemilu/WebsitePemilu/Pemilu/views.py", line 651, in analisa
+    for kabupaten in kabupaten_data:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 1926, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 208, in __iter__
+    for row in compiler.results_iter(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1513, in results_iter
+    results = self.execute_sql(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+[17/Jan/2024 18:30:18] "GET /analisa/ HTTP/1.1" 500 123045
+[17/Jan/2024 18:30:21] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[17/Jan/2024 18:30:22] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[17/Jan/2024 18:31:00] "GET /dashboard/ HTTP/1.1" 200 5860507
+[17/Jan/2024 18:32:05] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 18:32:05] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:32:05] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 18:32:05] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:32:06] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 18:32:06] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 18:32:06] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 18:32:07] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 18:32:07] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 19:15:49] code 400, message Bad request version ('À\x13À')
+[17/Jan/2024 19:15:49] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 19:15:49] code 400, message Bad request version ('À(À$À\x14À')
+[17/Jan/2024 19:15:49] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 20:03:53] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 20:03:53] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 20:03:53] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 20:03:53] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 20:03:53] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 20:03:53] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 20:03:53] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 20:03:54] code 400, message Bad request version ('À\x14À')
+[17/Jan/2024 20:03:54] You're accessing the development server over HTTPS, but it only supports HTTP.
+[17/Jan/2024 20:30:02] "GET / HTTP/1.1" 302 0
+[17/Jan/2024 20:30:02] "GET /login/ HTTP/1.1" 200 2904
+[17/Jan/2024 21:27:15] code 400, message Bad HTTP/0.9 request type ('\x00\x00\x00')
+[17/Jan/2024 21:27:15] "    c                           " 400 -
+Not Found: /.env
+[17/Jan/2024 23:30:29] "GET /.env HTTP/1.1" 404 5495
+[18/Jan/2024 00:13:31] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 00:13:31] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[18/Jan/2024 00:13:32] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 00:13:43] "POST /login/ HTTP/1.1" 302 0
+[18/Jan/2024 00:14:19] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 01:34:52] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 01:35:20] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 01:35:21] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[18/Jan/2024 01:35:22] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 01:35:31] "POST /login/ HTTP/1.1" 302 0
+[18/Jan/2024 01:36:24] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 01:39:08,103] - Broken pipe from ('182.3.44.0', 39938)
+[18/Jan/2024 01:39:08,103] - Broken pipe from ('182.3.44.0', 39914)
+[18/Jan/2024 01:46:53] code 400, message Bad request version ('\x02h2\x08http/1.1\x00')
+[18/Jan/2024 01:46:53] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:46:54] code 400, message Bad request syntax ('\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03\x88N\x01kiæ\x98Ã"$¶')
+[18/Jan/2024 01:46:54] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:46:54] code 400, message Bad request syntax ('\x16\x03\x01\x02:\x01\x00\x026\x03\x03öqÓoAÎ\x87=÷ñ')
+[18/Jan/2024 01:46:54] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:46:54] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 01:46:54] code 400, message Bad request version ('u¶ß%®IÙ[V\xaddK}áæzÿ´wvq¥yÅ÷l\x01\x00\x12\x00\x00ÿ\x01\x00\x01\x00\x00')
+[18/Jan/2024 01:46:54] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:46:54] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[18/Jan/2024 01:46:54] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 01:47:01] code 400, message Bad request version ('"H¦5·|j\x91H¬\x02E\x93\x10úëc')
+[18/Jan/2024 01:47:01] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:47:01] code 400, message Bad request version ('®h')
+[18/Jan/2024 01:47:01] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 01:47:02] "POST /login/ HTTP/1.1" 302 0
+[18/Jan/2024 01:47:40] "GET /dashboard/ HTTP/1.1" 200 5860507
+Internal Server Error: /analisa/
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.UndefinedTable: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/home/ubuntu/website/WebsitePemilu/WebsitePemilu/Pemilu/views.py", line 651, in analisa
+    for kabupaten in kabupaten_data:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 1926, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/query.py", line 208, in __iter__
+    for row in compiler.results_iter(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1513, in results_iter
+    results = self.execute_sql(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: relation "Pemilu_datapemilu" does not exist
+LINE 1: ...ECT DISTINCT "Pemilu_datapemilu"."kabupaten" FROM "Pemilu_da...
+                                                             ^
+
+[18/Jan/2024 01:55:05] "GET /analisa/ HTTP/1.1" 500 123048
+[18/Jan/2024 02:15:34] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 02:20:36,377] - Broken pipe from ('182.3.44.0', 40268)
+[18/Jan/2024 02:21:42,943] - Broken pipe from ('182.3.44.0', 40396)
+[18/Jan/2024 02:29:08,105] - Broken pipe from ('180.252.91.203', 49636)
+[18/Jan/2024 02:29:08,107] - Broken pipe from ('180.252.91.203', 49634)
+[18/Jan/2024 02:35:02] "GET /dashboard/ HTTP/1.1" 200 5860507
+Not Found: /favicon.ico
+[18/Jan/2024 05:10:17] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 05:22:18] "GET /analisa/ HTTP/1.1" 200 5620753
+[18/Jan/2024 05:27:12] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 05:27:18] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 05:27:26] "GET /isi-hasil-pemilu/Kurnia%20Jaya/ HTTP/1.1" 200 36667
+[18/Jan/2024 05:27:30] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 05:50:18] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 06:01:40] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[18/Jan/2024 06:02:13] "GET /tambah-pemilih/ HTTP/1.1" 200 15525
+Bad Request: /verifikasi-nik/
+[18/Jan/2024 06:02:16] "POST /verifikasi-nik/ HTTP/1.1" 400 2
+[18/Jan/2024 06:02:22] "POST /verifikasi-nik/ HTTP/1.1" 200 356
+[18/Jan/2024 06:02:37] "POST /tambah-pemilih/ HTTP/1.1" 200 92
+[18/Jan/2024 06:02:39] "GET /tambah-pemilih/ HTTP/1.1" 200 15525
+[18/Jan/2024 06:02:40] "GET /data-pemilih/ HTTP/1.1" 200 13670
+[18/Jan/2024 06:07:35] "GET /tambah-pemilih/ HTTP/1.1" 200 15525
+[18/Jan/2024 06:08:03] "POST /verifikasi-nik/ HTTP/1.1" 200 356
+[18/Jan/2024 06:09:37] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 06:10:00] "GET /tambah-koordinator/ HTTP/1.1" 200 26510
+[18/Jan/2024 06:10:13] "POST /verifikasi-nik/ HTTP/1.1" 200 356
+[18/Jan/2024 06:10:36] "GET /data-pemilih/ HTTP/1.1" 200 13670
+[18/Jan/2024 06:10:38] "DELETE /delete-pemilih/1/ HTTP/1.1" 200 39
+[18/Jan/2024 06:10:38] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[18/Jan/2024 06:10:39] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 06:10:55] "GET /data-wilayah/ HTTP/1.1" 200 1226053
+[18/Jan/2024 06:11:55] "GET /setting/ HTTP/1.1" 200 8426
+[18/Jan/2024 06:12:17] "GET /data-wilayah/ HTTP/1.1" 200 1226053
+[18/Jan/2024 06:12:54] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:13:53] "GET /isi-hasil-pemilu/Air%20Batu%20buding/ HTTP/1.1" 200 15840
+[18/Jan/2024 06:14:09] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:14:16] "GET /isi-hasil-pemilu/Dukong/ HTTP/1.1" 200 48474
+[18/Jan/2024 06:14:49] "GET /isi-hasil-pemilu/Simpang%20Pesak/ HTTP/1.1" 200 28742
+[18/Jan/2024 06:14:56] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:15:17] "GET /isi-hasil-pemilu/Balok/ HTTP/1.1" 200 17698
+[18/Jan/2024 06:15:19] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:15:29] "GET /isi-hasil-pemilu/Dendang/ HTTP/1.1" 200 17702
+[18/Jan/2024 06:15:32] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:15:46] "GET /isi-hasil-pemilu/Dukong/ HTTP/1.1" 200 48474
+[18/Jan/2024 06:16:04] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:16:20] "GET /isi-hasil-pemilu/Pulau%20Sumedang/ HTTP/1.1" 200 10852
+[18/Jan/2024 06:16:22] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:16:41] "GET /isi-hasil-pemilu/Dukong/ HTTP/1.1" 200 48474
+[18/Jan/2024 06:17:05] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 06:20:10] "GET /isi-hasil-pemilu/Dukong/ HTTP/1.1" 200 48474
+[18/Jan/2024 07:06:53] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 07:07:03] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 07:07:03] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[18/Jan/2024 07:07:06] "GET /favicon.ico HTTP/1.1" 404 5516
+Invalid HTTP_HOST header: 'api.ipify.org'. You may need to add 'api.ipify.org' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/utils/deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'api.ipify.org'. You may need to add 'api.ipify.org' to ALLOWED_HOSTS.
+Bad Request: /http:/api.ipify.org/
+[18/Jan/2024 07:07:10] "GET http://api.ipify.org/?format=json HTTP/1.1" 400 64115
+Invalid HTTP_HOST header: 'www.shadowserver.org'. You may need to add 'www.shadowserver.org' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/utils/deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'www.shadowserver.org'. You may need to add 'www.shadowserver.org' to ALLOWED_HOSTS.
+Bad Request: /www.shadowserver.org:443
+[18/Jan/2024 07:07:13] "CONNECT www.shadowserver.org:443 HTTP/1.1" 400 64318
+Not Found: /.env
+[18/Jan/2024 09:28:19] "GET /.env HTTP/1.1" 404 5495
+[18/Jan/2024 10:09:07] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03T¼Êÿ\x98\x0f÷l\x97.f\\öö_÷M\x19M\x99ÞÇæ÷\x87Å\\\x17ô.½A\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+[18/Jan/2024 10:09:07] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:09:07] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 10:09:07] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:09:07] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 10:09:08] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 10:09:08] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:09:08] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03Ð¯&ª+Wöº\x12\x13\x02e×¼I¯)hjÏò§JM-èUñ\x1b|¹&\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+[18/Jan/2024 10:09:08] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:22:58] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 10:46:04] code 400, message Bad request version ('À\x13À')
+[18/Jan/2024 10:46:04] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:46:09] code 400, message Bad request syntax ('\x00\x00\x00T\x00\x03\x00\x00user\x00postgres\x00database\x00postgres\x00application_name\x00psql\x00client_encoding\x00UTF8\x00\x00')
+[18/Jan/2024 10:46:09] "   T   user postgres database postgres application_name psql client_encoding UTF8  " 400 -
+[18/Jan/2024 10:46:45] code 400, message Bad request version ('À\x13À')
+[18/Jan/2024 10:46:45] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 10:46:47] code 400, message Bad request syntax ('\x00\x00\x00T\x00\x03\x00\x00user\x00postgres\x00database\x00postgres\x00application_name\x00psql\x00client_encoding\x00UTF8\x00\x00')
+[18/Jan/2024 10:46:47] "   T   user postgres database postgres application_name psql client_encoding UTF8  " 400 -
+[18/Jan/2024 11:24:09] code 400, message Bad request version ('\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01\x00')
+[18/Jan/2024 11:24:09] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 11:24:09] code 400, message Bad request version ('àëUt\x00-\x00\x02\x01\x01\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00\x1b\x00\x03\x02\x00\x02\x00')
+[18/Jan/2024 11:24:09] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 11:24:09] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 11:24:10] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /robots.txt
+[18/Jan/2024 11:24:10] "GET /robots.txt HTTP/1.1" 404 5513
+Not Found: /favicon.ico
+[18/Jan/2024 11:24:10] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 11:24:10] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 11:24:11] "GET /login/ HTTP/1.1" 200 2904
+[18/Jan/2024 11:24:12] "GET /login/ HTTP/1.1" 200 2904
+[18/Jan/2024 11:24:57] code 400, message Bad request version ('\x02h2\x08http/1.1\x00\x17\x00\x00ÿ\x01\x00\x01\x00\x00')
+[18/Jan/2024 11:24:57] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 11:24:57] code 400, message Bad request syntax ('\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03ô\x11è\x8cÄUÖ\x15íF\x9fe{×è§×ß\x16B?á¢')
+[18/Jan/2024 11:24:57] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 11:24:58] "POST /login/ HTTP/1.1" 302 0
+[18/Jan/2024 11:25:37] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 11:26:12] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:34:48] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 11:37:46] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 11:41:11] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 11:41:42] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:42:18] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[18/Jan/2024 11:42:29] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 11:42:35] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 11:42:42] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 11:42:53] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 11:43:14] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:43:25] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:43:35] "GET /isi-hasil-pemilu/Bentaian%20Jaya/ HTTP/1.1" 200 15836
+[18/Jan/2024 11:43:42] "GET /isi-hasil-pemilu/Lalang%20Jaya/ HTTP/1.1" 200 26311
+[18/Jan/2024 11:43:58] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 11:44:05] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 11:45:17] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 11:45:34] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 11:46:50] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 11:58:05] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:58:19] "GET /isi-hasil-pemilu/Tanjung%20Batu%20Itam/ HTTP/1.1" 200 15844
+[18/Jan/2024 11:58:21] "GET /isi-hasil-pemilu/Tanjung%20Batu%20Itam/ HTTP/1.1" 200 15844
+[18/Jan/2024 11:58:34] "GET /list-wilayah/ HTTP/1.1" 200 456851
+[18/Jan/2024 11:58:58] "GET /isi-hasil-pemilu/Aik%20Madu/ HTTP/1.1" 200 12394
+[18/Jan/2024 11:59:32] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 12:02:45] "GET /setting/ HTTP/1.1" 200 8426
+[18/Jan/2024 12:17:21] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 12:17:23] "GET /tambah-koordinator/ HTTP/1.1" 200 26510
+[18/Jan/2024 12:17:25] "POST /verifikasi-nik/ HTTP/1.1" 200 356
+[18/Jan/2024 12:17:55] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[18/Jan/2024 12:18:26] "GET /edit-koordinator/11/ HTTP/1.1" 200 11928
+Not Found: /media/foto_ktp_1906042709880002.jpg
+[18/Jan/2024 12:18:32] "GET /media/foto_ktp_1906042709880002.jpg HTTP/1.1" 404 5822
+[18/Jan/2024 18:33:08] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 18:33:08] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 18:33:09] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03Ä~Õ1õÒÀ\x88Ï\x07Ê|p\x98·ï´ô.-\x01Õ3[êM\x95ô\x07$\x9d$\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+[18/Jan/2024 18:33:09] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 18:33:09] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 18:33:10] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 18:33:10] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 18:33:10] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 18:33:10] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 18:43:57,057] - Broken pipe from ('167.94.145.58', 51116)
+[18/Jan/2024 18:44:00] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 18:44:00,375] - Broken pipe from ('167.94.145.58', 48414)
+[18/Jan/2024 18:44:03] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 18:44:04] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:04] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:44:07] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:44:07] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:07] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:44:10] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:44:11] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:11] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:44:14] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:44:14] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:14] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:44:18] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:44:18] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:18] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:44:21] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:44:22] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:44:22] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:04] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 18:45:15] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:15] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:18] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:45:19] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:19] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:22] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:45:23] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:23] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:26] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:45:27] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:27] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:30] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:45:31] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:31] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 18:45:34] "GET /login HTTP/1.1" 301 0
+[18/Jan/2024 18:45:34] code 505, message Invalid HTTP version (2.0)
+[18/Jan/2024 18:45:34] "PRI * HTTP/2.0" 505 -
+[18/Jan/2024 19:15:28] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 19:30:40] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 19:30:40] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 19:30:40] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03Á¼c!ðí1ñ§~¢!\x95\xad¿a,40¼²è\x7fX8¶ú^OÜ=8\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+[18/Jan/2024 19:30:40] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 19:30:40] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 19:30:41] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 19:30:41] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 19:30:41] code 400, message Bad request version ('À\x14À')
+[18/Jan/2024 19:30:41] You're accessing the development server over HTTPS, but it only supports HTTP.
+[18/Jan/2024 20:29:10] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 20:29:11] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[18/Jan/2024 20:29:11] "GET /favicon.ico HTTP/1.1" 404 5516
+[18/Jan/2024 20:29:17] "POST /login/ HTTP/1.1" 302 0
+[18/Jan/2024 20:29:53] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 20:31:07] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 21:19:58] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 21:45:17] "GET /analisa/ HTTP/1.1" 200 5620454
+[18/Jan/2024 21:50:43] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 21:55:28] "GET /dashboard/ HTTP/1.1" 200 5860507
+[18/Jan/2024 23:02:53] "GET / HTTP/1.1" 302 0
+[18/Jan/2024 23:02:53] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 00:21:54] code 400, message Bad request version ('À\x13À')
+[19/Jan/2024 00:21:54] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 00:21:55] code 400, message Bad request version ('À(À$À\x14À')
+[19/Jan/2024 00:21:55] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 01:23:55] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 01:23:55] You're accessing the development server over HTTPS, but it only supports HTTP.
+Not Found: /.env
+[19/Jan/2024 04:24:02] "GET /.env HTTP/1.1" 404 5490
+[19/Jan/2024 05:06:09] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 05:06:09] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 05:06:10] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 05:06:10] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 05:06:10] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 05:06:11] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 05:06:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 05:06:12] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00{\x01\x00\x00w\x03\x03ïß\\þ\xadÔ:äv«é¬-\x05|sfw\x04ª´Xµ=\x938jÀ\x93WØ^\x00\x00\x1aÀ/À+À\x11À\x07À\x13À')
+[19/Jan/2024 05:06:12] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 07:29:39] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 07:29:39] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 07:53:17] "GET /data-koordinator/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:17] "GET /accounts/login/?next=/data-koordinator/ HTTP/1.1" 404 5552
+Not Found: /favicon.ico
+[19/Jan/2024 07:53:17] "GET /favicon.ico HTTP/1.1" 404 5516
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:20] "GET /accounts/login/?next=/data-koordinator/ HTTP/1.1" 404 5552
+[19/Jan/2024 07:53:21] "GET /data-pemilih/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:21] "GET /accounts/login/?next=/data-pemilih/ HTTP/1.1" 404 5548
+[19/Jan/2024 07:53:23] "GET /dashboard/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:23] "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 404 5545
+[19/Jan/2024 07:53:24] "GET /data-wilayah/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:24] "GET /accounts/login/?next=/data-wilayah/ HTTP/1.1" 404 5548
+[19/Jan/2024 07:53:24] "GET /tambah-koordinator/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[19/Jan/2024 07:53:25] "GET /accounts/login/?next=/tambah-koordinator/ HTTP/1.1" 404 5554
+[19/Jan/2024 07:53:55] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:54:09] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 07:54:39] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:54:50] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 07:54:59] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:55:06] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 07:55:14] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:55:25] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 07:55:40] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:55:41] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 07:55:45] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 07:58:22,743] - Broken pipe from ('182.2.143.213', 49708)
+[19/Jan/2024 07:58:22,744] - Broken pipe from ('182.2.147.85', 42382)
+[19/Jan/2024 08:01:32,059] - Broken pipe from ('167.248.133.124', 46682)
+[19/Jan/2024 08:01:35] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 08:01:35,597] - Broken pipe from ('167.248.133.124', 59614)
+[19/Jan/2024 08:01:38] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 08:01:39] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:01:39] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:01:43] "GET /login HTTP/1.1" 301 0
+[19/Jan/2024 08:01:43] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:01:43] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:01:47] "GET /login HTTP/1.1" 301 0
+[19/Jan/2024 08:01:48] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:01:48] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:01:52] "GET /login HTTP/1.1" 301 0
+[19/Jan/2024 08:01:53] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:01:53] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:01:57] "GET /login HTTP/1.1" 301 0
+[19/Jan/2024 08:01:58] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:01:58] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:02:01] "GET /login HTTP/1.1" 301 0
+[19/Jan/2024 08:02:02] code 505, message Invalid HTTP version (2.0)
+[19/Jan/2024 08:02:02] "PRI * HTTP/2.0" 505 -
+[19/Jan/2024 08:02:12] "GET /dashboard/ HTTP/1.1" 200 5860507
+Not Found: /favicon.ico
+[19/Jan/2024 08:02:21] "GET /favicon.ico HTTP/1.1" 404 5516
+[19/Jan/2024 08:02:39] "GET /analisa/ HTTP/1.1" 200 5620454
+[19/Jan/2024 08:03:28] "POST /login/ HTTP/1.1" 200 69
+[19/Jan/2024 08:03:30] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 08:04:37] "POST /login/ HTTP/1.1" 302 0
+[19/Jan/2024 08:05:16] "GET /dashboard/ HTTP/1.1" 200 5860507
+[19/Jan/2024 08:05:51] "GET /analisa/ HTTP/1.1" 200 5620454
+[19/Jan/2024 08:28:37] code 400, message Bad request version ('ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x01\x93\x8a\x8a\x00\x00\x00')
+[19/Jan/2024 08:28:37] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 08:28:37] code 400, message Bad request syntax ('\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03ª\x99=X\x8f\x19è')
+[19/Jan/2024 08:28:37] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 08:28:37] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 08:28:37] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[19/Jan/2024 08:28:39] "GET /favicon.ico HTTP/1.1" 404 5516
+[19/Jan/2024 08:28:47] code 400, message Bad request version ('t|\x15\x03Ï±3\x11«\x94µj\x01R&ë\x10^\x16Ebìrh"¥T\x7fjçm¿æ@5ªr4ú/m¡¢¡\x94K')
+[19/Jan/2024 08:28:47] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 08:28:47] code 400, message Bad request version ('\x9a\x9a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x01\xadúú\x00\x00\x00\x17\x00\x00\x00#\x00\x00\x00\x1b\x00\x03\x02\x00\x02Di\x00\x05\x00\x03\x02h2\x00')
+[19/Jan/2024 08:28:47] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 08:28:47] "POST /login/ HTTP/1.1" 302 0
+[19/Jan/2024 08:29:24] "GET /dashboard/ HTTP/1.1" 200 5860507
+[19/Jan/2024 08:30:11] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 08:33:33] "GET /filter-data-koordinator/?tingkat_kerja=kabupaten&kabupaten_bertugas=&kecamatan_bertugas=&kelurahan_bertugas=&tps_bertugas= HTTP/1.1" 200 7120
+[19/Jan/2024 08:36:06] "GET /filter-data-koordinator/?tingkat_kerja=kecamatan&kabupaten_bertugas=&kecamatan_bertugas=&kelurahan_bertugas=&tps_bertugas= HTTP/1.1" 200 6016
+[19/Jan/2024 08:36:22] "GET /setting/ HTTP/1.1" 200 8426
+[19/Jan/2024 08:36:31] "GET /analisa/ HTTP/1.1" 200 5620454
+[19/Jan/2024 08:36:58] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 08:36:58] "GET /login/ HTTP/1.1" 200 2904
+[19/Jan/2024 08:37:54] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[19/Jan/2024 08:38:01] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 08:38:03] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[19/Jan/2024 08:38:04] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 08:38:07] "GET /tambah-koordinator/ HTTP/1.1" 200 26510
+[19/Jan/2024 08:39:33] "POST /verifikasi-nik/ HTTP/1.1" 200 376
+[19/Jan/2024 08:40:01] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 08:40:05] "GET /edit-koordinator/11/ HTTP/1.1" 200 11928
+[19/Jan/2024 08:48:22] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+[19/Jan/2024 08:48:22] "  /*à     Cookie: mstshash=Administr" 400 -
+[19/Jan/2024 09:18:40] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+[19/Jan/2024 09:18:40] "  /*à     Cookie: mstshash=Administr" 400 -
+[19/Jan/2024 09:46:55] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+[19/Jan/2024 09:46:55] "  /*à     Cookie: mstshash=Administr" 400 -
+Not Found: /favicon.ico
+[19/Jan/2024 11:09:37] "GET /favicon.ico HTTP/1.1" 404 5516
+/home/ubuntu/website/WebsitePemilu/WebsitePemilu/Pemilu/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 2 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): Pemilu.
+Run 'python manage.py migrate' to apply them.
+January 17, 2024 - 18:26:36
+Django version 5.0, using settings 'WebsitePemilu.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+test1
+superadmin
+Login berhasil
+Belitung Timur
+Belitung
+test1
+superadmin
+Login berhasil
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+test1
+superadmin
+Login berhasil
+Belitung Timur
+Belitung
+Belitung Timur
+Belitung
+test1
+adminutama
+Login gagal
+test1
+Superadmin
+Login gagal
+test1
+Superadmin
+Login gagal
+test1
+Superadmin
+Login gagal
+test1
+Superadmin
+Login gagal
+Belitung Timur
+Belitung
+test1
+Superadmin
+Login gagal
+test1
+superadmin
+Login berhasil
+Belitung Timur
+Belitung
+test1
+adminutama2
+Login berhasil
+Belitung Timur
+Belitung
+Watching for file changes with StatReloader
+[19/Jan/2024 11:21:51] "GET /list-wilayah/ HTTP/1.1" 200 457831
+[19/Jan/2024 11:21:59] "GET /isi-hasil-pemilu/Gantung/Lilangan/ HTTP/1.1" 200 26305
+[19/Jan/2024 11:22:53] "GET /isi-hasil-pemilu/Simpang%20Pesak/Dukong/ HTTP/1.1" 200 12390
+[19/Jan/2024 11:22:55] "GET /list-wilayah/ HTTP/1.1" 200 457831
+[19/Jan/2024 11:23:06] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 11:27:59] "GET /analisa/ HTTP/1.1" 200 5620454
+Not Found: /favicon.ico
+[19/Jan/2024 12:08:13] "GET /favicon.ico HTTP/1.1" 404 5543
+[19/Jan/2024 12:08:59] "GET /list-wilayah/ HTTP/1.1" 200 457831
+[19/Jan/2024 12:09:05] "GET /analisa HTTP/1.1" 301 0
+[19/Jan/2024 12:09:09] "GET /analisa/ HTTP/1.1" 200 5620454
+[19/Jan/2024 12:10:51] "GET /analisa/ HTTP/1.1" 200 5620454
+[19/Jan/2024 12:12:32,184] - Broken pipe from ('114.124.243.169', 37086)
+[19/Jan/2024 12:12:32,187] - Broken pipe from ('114.124.243.169', 51148)
+[19/Jan/2024 12:17:12,116] - Broken pipe from ('114.124.243.169', 45426)
+[19/Jan/2024 12:17:12,118] - Broken pipe from ('114.124.243.169', 45430)
+[19/Jan/2024 12:40:31] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 12:41:06] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 12:41:07] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[19/Jan/2024 12:41:16] "GET /favicon.ico HTTP/1.1" 404 5543
+Invalid HTTP_HOST header: 'www.shadowserver.org'. You may need to add 'www.shadowserver.org' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/utils/deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'www.shadowserver.org'. You may need to add 'www.shadowserver.org' to ALLOWED_HOSTS.
+Bad Request: /www.shadowserver.org:443
+[19/Jan/2024 12:42:00] "CONNECT www.shadowserver.org:443 HTTP/1.1" 400 64446
+[19/Jan/2024 13:14:16] code 400, message Bad request syntax ('\x03\x00\x00\x13\x0eà\x00\x00\x00\x00\x00\x01\x00\x08\x00\x03\x00\x00\x00')
+[19/Jan/2024 13:14:16] "  à          " 400 -
+[19/Jan/2024 13:17:01] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 13:17:01] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 14:18:10] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 14:18:10] "GET /login/ HTTP/1.1" 200 2904
+Not Found: /favicon.ico
+[19/Jan/2024 14:18:10] "GET /favicon.ico HTTP/1.1" 404 5543
+[19/Jan/2024 14:18:31] "POST /login/ HTTP/1.1" 302 0
+[19/Jan/2024 14:19:08] "GET /dashboard/ HTTP/1.1" 200 5860507
+[19/Jan/2024 14:20:08] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[19/Jan/2024 14:20:14] "GET /tambah-pemilih/ HTTP/1.1" 200 15525
+[19/Jan/2024 14:20:24] "POST /verifikasi-nik/ HTTP/1.1" 200 358
+[19/Jan/2024 14:20:42] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 14:20:44] "GET /data-pemilih/ HTTP/1.1" 200 12623
+[19/Jan/2024 14:20:45] "GET /data-koordinator/ HTTP/1.1" 200 16391
+[19/Jan/2024 14:20:52] "GET /tambah-koordinator/ HTTP/1.1" 200 26510
+[19/Jan/2024 14:20:58] "POST /verifikasi-nik/ HTTP/1.1" 200 358
+[19/Jan/2024 14:21:30] "GET /data-wilayah/ HTTP/1.1" 200 1226053
+[19/Jan/2024 14:21:44] "GET /list-wilayah/ HTTP/1.1" 200 457831
+[19/Jan/2024 14:52:11] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 14:52:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 14:52:11] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 14:52:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 14:52:11] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 14:52:11] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 14:52:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 14:52:11] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 14:52:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 15:23:00] code 400, message Bad HTTP/0.9 request type ('\x00\x00\x00')
+[19/Jan/2024 15:23:00] "    c                           " 400 -
+[19/Jan/2024 16:15:58] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 16:15:58] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 16:15:59] code 400, message Bad HTTP/0.9 request type ("\x16\x03\x01\x00{\x01\x00\x00w\x03\x03v«Òö#\x82\x17\x8e'")
+[19/Jan/2024 16:15:59] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 16:15:59] "GET / HTTP/1.1" 302 0
+[19/Jan/2024 16:16:00] code 400, message Bad request version ('"')
+[19/Jan/2024 16:16:00] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 16:16:00] code 400, message Bad request version ('À\x14À')
+[19/Jan/2024 16:16:00] You're accessing the development server over HTTPS, but it only supports HTTP.
+[19/Jan/2024 16:49:06] code 400, message Bad HTTP/0.9 request type ('\x00\x00\x00')
+[19/Jan/2024 16:49:06] "    c                           " 400 -
+Not Found: /favicon.ico
+[19/Jan/2024 18:13:32] "GET /favicon.ico HTTP/1.1" 404 5543
