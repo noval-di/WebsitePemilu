@@ -45,7 +45,7 @@ urlpatterns = [
     path('setting/', setting_page, name='setting_page'),
     path('analisa/', analisa, name='analisa'),
     path('list-wilayah/', list_wilayah, name='list_wilayah'),
-    path('isi-hasil-pemilu/<str:kelurahan_name>/', isi_hasil_pemilu, name='isi_hasil_pemilu'),
+    path('isi-hasil-pemilu/<str:kecamatan_name>/<str:kelurahan_name>/', isi_hasil_pemilu, name='isi_hasil_pemilu'),
 
 ]
 if settings.DEBUG:

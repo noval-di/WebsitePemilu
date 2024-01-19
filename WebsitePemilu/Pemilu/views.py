@@ -784,8 +784,8 @@ from .forms import DataPemiluForm
 # views.py
 
 @login_required
-def isi_hasil_pemilu(request, kelurahan_name):
-    data_pemilu = DataPemilu.objects.filter(kelurahan=kelurahan_name)
+def isi_hasil_pemilu(request, kecamatan_name, kelurahan_name):
+    data_pemilu = DataPemilu.objects.filter(kecamatan=kecamatan_name, kelurahan=kelurahan_name)
 
     if request.method == 'POST':
         forms = [DataPemiluForm(request.POST, instance=pemilu, prefix=pemilu.tps) for pemilu in data_pemilu]
@@ -804,6 +804,7 @@ def isi_hasil_pemilu(request, kelurahan_name):
     context = {
         'data_pemilu': data_pemilu,
         'forms': forms,
+        'kecamatan_name': kecamatan_name,
         'kelurahan_name': kelurahan_name,
         'tps_names': tps_names,
     }
