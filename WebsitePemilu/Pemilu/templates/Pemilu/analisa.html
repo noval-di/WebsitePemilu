@@ -48,7 +48,7 @@
                 </div>
             </div>
             <canvas id="myChart-{{ data_kabupaten.id }}" style="width:100%;max-width:800px"></canvas>
-            <script>
+            <!-- <script>
                 var xValues = [
                     "Ir. Rudianto Tjen - 2019",
                     "Ir. Rudianto Tjen - 2024", 
@@ -86,7 +86,7 @@
                         scales: {}
                     }
                 });
-            </script>
+            </script> -->
             <button class="detail-kecamatan" data-target="{{ data_kabupaten.id }}">Detail Kecamatan</button>
         </div>
     </div>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <canvas id="myChart-{{ data_kecamatan.id }}" style="width:100%;max-width:800px"></canvas>
-                        <script>
+                        <!-- <script>
                             var xValues = [
                                 "Ir. Rudianto Tjen - 2019",
                                 "Ir. Rudianto Tjen - 2024", 
@@ -159,7 +159,7 @@
                                     scales: {}
                                 }
                             });
-                        </script>
+                        </script> -->
                         <button class="detail-kelurahan" data-target="{{ data_kecamatan.id }}">Detail Kelurahan</button>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
                                             </div>
                                         </div>
                                         <canvas id="myChart-{{ data_kelurahan.id }}" style="width:100%;max-width:800px"></canvas>
-                                        <script>
+                                        <!-- <script>
                                             var xValues = [
                                                 "Ir. Rudianto Tjen - 2019",
                                                 "Ir. Rudianto Tjen - 2024", 
@@ -232,7 +232,7 @@
                                                     scales: {}
                                                 }
                                             });
-                                        </script>
+                                        </script> -->
 
                                         <button class="detail-tps" data-target="{{ data_kelurahan.id }}">Detail TPS</button>
                                     </div>
@@ -269,7 +269,7 @@
                                                             </div>
                                                         </div>
                                                         <canvas id="myChart-{{ data_tps.id }}" style="width:100%;max-width:800px"></canvas>
-                                                        <script>
+                                                        <!-- <script>
                                                             var xValues = [
                                                                 "Ir. Rudianto Tjen - 2019",
                                                                 "Ir. Rudianto Tjen - 2024", 
@@ -307,7 +307,7 @@
                                                                     scales: {}
                                                                 }
                                                             });
-                                                        </script>
+                                                        </script> -->
 
                                                     </div>
                                                 </div>
@@ -467,6 +467,113 @@
                 });
             });
 
+
+
+            function initializeChart(chartId, labels, data, title) {
+                new Chart(chartId, {
+                    type: "horizontalBar",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            backgroundColor: ["red", "green", "blue", "orange", "brown", "purple", "gray"],
+                            data: data
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: title
+                        },
+                        scales: {}
+                    }
+                });
+            }
+
+
+            {% for data_kabupaten in data_by_kabupaten %}
+                // Inisialisasi chart untuk Kabupaten
+                initializeChart("myChart-{{ data_kabupaten.id }}", [
+                    "Ir. Rudianto Tjen - 2019",
+                    "Ir. Rudianto Tjen - 2024", 
+                    "H. Rustam Effendi, S.E. - 2019", 
+                    "Irma Fika Adita, S.Kom. - 2019", 
+                    "Suara Partai - 2019", 
+                    "Total Suara - 2019",
+                    "Total Suara - 2024",
+                ], [
+                    "{{ data_kabupaten.suara_calon_1_2019 }}",
+                    "{{ data_kabupaten.suara_calon_1_2024 }}",
+                    "{{ data_kabupaten.suara_calon_2_2019 }}",
+                    "{{ data_kabupaten.suara_calon_3_2019 }}",
+                    "{{ data_kabupaten.suara_partai_2019 }}",
+                    "{{ data_kabupaten.total_suara_2019 }}",
+                    "{{ data_kabupaten.total_suara_2024 }}",
+                ], "Suara Pemilihan Kabupaten {{ data_kabupaten.nama_kabupaten }}");
+
+                {% for data_kecamatan in data_kabupaten.kecamatan %}
+                    // Inisialisasi chart untuk Kecamatan
+                    initializeChart("myChart-{{ data_kecamatan.id }}", [
+                    "Ir. Rudianto Tjen - 2019",
+                    "Ir. Rudianto Tjen - 2024", 
+                    "H. Rustam Effendi, S.E. - 2019", 
+                    "Irma Fika Adita, S.Kom. - 2019", 
+                    "Suara Partai - 2019", 
+                    "Total Suara - 2019",
+                    "Total Suara - 2024",
+                    ], [
+                    "{{ data_kecamatan.suara_calon_1_2019 }}",
+                    "{{ data_kecamatan.suara_calon_1_2024 }}",
+                    "{{ data_kecamatan.suara_calon_2_2019 }}",
+                    "{{ data_kecamatan.suara_calon_3_2019 }}",
+                    "{{ data_kecamatan.suara_partai_2019 }}",
+                    "{{ data_kecamatan.total_suara_2019 }}",
+                    "{{ data_kecamatan.total_suara_2024 }}",
+                    ], "Suara Pemilihan Kecamatan {{ data_kecamatan.nama_kecamatan }}");
+
+                    {% for data_kelurahan in data_kecamatan.kelurahan %}
+                        // Inisialisasi chart untuk Kelurahan
+                        initializeChart("myChart-{{ data_kelurahan.id }}", [
+                        "Ir. Rudianto Tjen - 2019",
+                        "Ir. Rudianto Tjen - 2024", 
+                        "H. Rustam Effendi, S.E. - 2019", 
+                        "Irma Fika Adita, S.Kom. - 2019", 
+                        "Suara Partai - 2019", 
+                        "Total Suara - 2019",
+                        "Total Suara - 2024",
+                        ], [
+                        "{{ data_kelurahan.suara_calon_1_2019 }}",
+                        "{{ data_kelurahan.suara_calon_1_2024 }}",
+                        "{{ data_kelurahan.suara_calon_2_2019 }}",
+                        "{{ data_kelurahan.suara_calon_3_2019 }}",
+                        "{{ data_kelurahan.suara_partai_2019 }}",
+                        "{{ data_kelurahan.total_suara_2019 }}",
+                        "{{ data_kelurahan.total_suara_2024 }}",
+                        ], "Suara Pemilihan Kelurahan {{ data_kelurahan.nama_kelurahan }}");
+
+                        {% for data_tps in data_kelurahan.tps %}
+                            // Inisialisasi chart untuk TPS
+                            initializeChart("myChart-{{ data_tps.id }}", [
+                            "Ir. Rudianto Tjen - 2019",
+                            "Ir. Rudianto Tjen - 2024", 
+                            "H. Rustam Effendi, S.E. - 2019", 
+                            "Irma Fika Adita, S.Kom. - 2019", 
+                            "Suara Partai - 2019", 
+                            "Total Suara - 2019",
+                            "Total Suara - 2024",
+                            ], [
+                            "{{ data_tps.suara_calon_1_2019 }}",
+                            "{{ data_tps.suara_calon_1_2024 }}",
+                            "{{ data_tps.suara_calon_2_2019 }}",
+                            "{{ data_tps.suara_calon_3_2019 }}",
+                            "{{ data_tps.suara_partai_2019 }}",
+                            "{{ data_tps.total_suara_2019 }}",
+                            "{{ data_tps.total_suara_2024 }}",
+                            ], "Suara Pemilihan TPS {{ data_tps.nama_tps }}");
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
 
     });
 
