@@ -24,7 +24,7 @@
 
 
 {% for data_kabupaten in data_by_kabupaten %}
-    <div class="card shadow">
+    <div id="kabupaten-{{ data_kabupaten.id }}" class="card shadow">
         <div class="card-body">
             <h5 class="card-title">Kabupaten {{ data_kabupaten.nama_kabupaten }}</h5>
             <div class="data-table">
@@ -47,7 +47,7 @@
                     <p class="card-text">:  {{ data_kabupaten.total_suara_2024 }}</p>
                 </div>
             </div>
-            <canvas id="myChart-{{ data_kabupaten.id }}" style="width:100%;max-width:800px"></canvas>
+            <canvas id="chart-kabupaten-{{ data_kabupaten.id }}" style="width:100%;max-width:800px"></canvas>
             <!-- <script>
                 var xValues = [
                     "Ir. Rudianto Tjen - 2019",
@@ -97,7 +97,7 @@
             <div class="row">
                 <h6 class="card-subtitle mb-2 text-muted">Detail Kecamatan di Kabupaten {{ data_kabupaten.nama_kabupaten }}</h6>
                 {% for data_kecamatan in data_kabupaten.kecamatan %}
-                <div class="card shadow">
+                <div id="kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}" class="card shadow">
                     <div class="card-body">
                         <h6 class="card-subtitle mb-2 text-muted">Kecamatan {{ data_kecamatan.nama_kecamatan }}</h6>
                         <div class="data-table">
@@ -120,7 +120,7 @@
                                 <p class="card-text">:  {{ data_kecamatan.total_suara_2024 }}</p>
                             </div>
                         </div>
-                        <canvas id="myChart-{{ data_kecamatan.id }}" style="width:100%;max-width:800px"></canvas>
+                        <canvas id="chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}" style="width:100%;max-width:800px"></canvas>
                         <!-- <script>
                             var xValues = [
                                 "Ir. Rudianto Tjen - 2019",
@@ -170,7 +170,7 @@
                         <div class="row">
                             <h6 class="card-subtitle mb-2 text-muted">Detail Kelurahan di Kecamatan {{ data_kecamatan.nama_kecamatan }}</h6>
                             {% for data_kelurahan in data_kecamatan.kelurahan %}
-                                <div class="card shadow">
+                                <div id="kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}" class="card shadow">
                                     <div class="card-body">
                                         <h6 class="card-subtitle mb-2 text-muted">Kelurahan {{ data_kelurahan.nama_kelurahan }}</h6>
                                         <div class="data-table">
@@ -193,7 +193,7 @@
                                                 <p class="card-text">:  {{ data_kelurahan.total_suara_2024 }}</p>
                                             </div>
                                         </div>
-                                        <canvas id="myChart-{{ data_kelurahan.id }}" style="width:100%;max-width:800px"></canvas>
+                                        <canvas id="chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}" style="width:100%;max-width:800px"></canvas>
                                         <!-- <script>
                                             var xValues = [
                                                 "Ir. Rudianto Tjen - 2019",
@@ -244,8 +244,9 @@
                                     <div class="column">
                                         <div class="row">
                                             <h6 class="card-subtitle mb-2 text-muted">Detail TPS di Kelurahan {{ data_kelurahan.nama_kelurahan }}</h6>
+
                                             {% for data_tps in data_kelurahan.tps %}
-                                                <div class="card shadow">
+                                                <div id="kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}-tps-{{ data_tps.id }}" class="card shadow">
                                                     <div class="card-body">
                                                         <h6 class="card-subtitle mb-2 text-muted">TPS {{ data_tps.nama_tps }} Kelurahan/Desa {{data_kelurahan.nama_kelurahan }} </h6>
                                                         <div class="data-table">
@@ -268,7 +269,7 @@
                                                                 <p class="card-text">:  {{ data_tps.total_suara_2024 }}</p>
                                                             </div>
                                                         </div>
-                                                        <canvas id="myChart-{{ data_tps.id }}" style="width:100%;max-width:800px"></canvas>
+                                                        <canvas id="chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}-tps-{{ data_tps.id }}" style="width:100%;max-width:800px"></canvas>
                                                         <!-- <script>
                                                             var xValues = [
                                                                 "Ir. Rudianto Tjen - 2019",
@@ -493,7 +494,7 @@
 
             {% for data_kabupaten in data_by_kabupaten %}
                 // Inisialisasi chart untuk Kabupaten
-                initializeChart("myChart-{{ data_kabupaten.id }}", [
+                initializeChart("chart-kabupaten-{{ data_kabupaten.id }}", [
                     "Ir. Rudianto Tjen - 2019",
                     "Ir. Rudianto Tjen - 2024", 
                     "H. Rustam Effendi, S.E. - 2019", 
@@ -513,7 +514,7 @@
 
                 {% for data_kecamatan in data_kabupaten.kecamatan %}
                     // Inisialisasi chart untuk Kecamatan
-                    initializeChart("myChart-{{ data_kecamatan.id }}", [
+                    initializeChart("chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}", [
                     "Ir. Rudianto Tjen - 2019",
                     "Ir. Rudianto Tjen - 2024", 
                     "H. Rustam Effendi, S.E. - 2019", 
@@ -533,7 +534,7 @@
 
                     {% for data_kelurahan in data_kecamatan.kelurahan %}
                         // Inisialisasi chart untuk Kelurahan
-                        initializeChart("myChart-{{ data_kelurahan.id }}", [
+                        initializeChart("chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}", [
                         "Ir. Rudianto Tjen - 2019",
                         "Ir. Rudianto Tjen - 2024", 
                         "H. Rustam Effendi, S.E. - 2019", 
@@ -553,7 +554,7 @@
 
                         {% for data_tps in data_kelurahan.tps %}
                             // Inisialisasi chart untuk TPS
-                            initializeChart("myChart-{{ data_tps.id }}", [
+                            initializeChart("chart-kabupaten-{{ data_kabupaten.id }}-kecamatan-{{ data_kecamatan.id }}-kelurahan-{{ data_kelurahan.id }}-tps-{{ data_tps.id }}", [
                             "Ir. Rudianto Tjen - 2019",
                             "Ir. Rudianto Tjen - 2024", 
                             "H. Rustam Effendi, S.E. - 2019", 
