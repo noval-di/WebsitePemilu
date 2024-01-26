@@ -5,7 +5,10 @@ from .models import DataWarga, DataKoordinator, DataPemilih
 from django.http import HttpResponse
 
 from .models import PengaturanWilayah
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+def is_superuser_or_staff(user):
+    return user.is_superuser or user.is_staff
 
 @login_required
 def dashboard(request):
@@ -240,15 +243,24 @@ from django.shortcuts import render, redirect
 from .forms import KoordinatorForm
 from django.contrib import messages
 
+def cek_nik_terdaftar_koordinator(nik):
+    return DataKoordinator.objects.filter(nik=nik).exists()
+
 @login_required
 def tambah_koordinator(request):
     if request.method == 'POST':
         form = KoordinatorForm(request.POST, request.FILES)
         if form.is_valid():
-            koordinator = form.save(commit=False)
-            koordinator.jumlah_rekrutan = 0  
-            koordinator.save()
-            return JsonResponse({'success': True, 'message': 'Koordinator berhasil ditambahkan', 'redirect': '/tambah-koordinator/'})
+            nik = form.cleaned_data['nik'] #nik koor
+            if cek_nik_terdaftar_koordinator(nik):
+                error_message = 'NIK sudah terdaftar sebagai koordinator'
+                messages.error(request, error_message)
+                return JsonResponse({'success': False, 'message':error_message})
+            else:
+                koordinator = form.save(commit=False)
+                koordinator.jumlah_rekrutan = 0  
+                koordinator.save()
+                return JsonResponse({'success': True, 'message': 'Koordinator berhasil ditambahkan', 'redirect': '/tambah-koordinator/'})
         else:
             error_message = 'Terjadi kesalahan dalam pengisian wilayah tugas koordinator.'
             for field, errors in form.errors.items():
@@ -325,18 +337,27 @@ from .forms import PemilihForm
 
 from django.shortcuts import get_object_or_404
 
+def cek_nik_terdaftar_pemilih(nik):
+    return DataPemilih.objects.filter(nik=nik).exists()
+
 @login_required
 def tambah_pemilih(request):
     if request.method == 'POST':
         form = PemilihForm(request.POST, request.FILES)
         if form.is_valid():
-            pemilih = form.save(commit=False)  
-            koordinator_id = pemilih.koordinator.id
-            koordinator = DataKoordinator.objects.get(pk=koordinator_id)
-            koordinator.jumlah_rekrutan += 1
-            koordinator.save()
-            pemilih.save()
-            return JsonResponse({'success': True, 'message': 'Relawan berhasil ditambahkan', 'redirect': '/tambah-pemilih/'}) 
+            nik = form.cleaned_data['nik']
+            if cek_nik_terdaftar_pemilih(nik):
+                error_message = 'NIK sudah terdaftar sebagai Pemilih'
+                messages.error(request, error_message)
+                return JsonResponse({'success': False, 'message': error_message})
+            else:
+                pemilih = form.save(commit=False)  
+                koordinator_id = pemilih.koordinator.id
+                koordinator = DataKoordinator.objects.get(pk=koordinator_id)
+                koordinator.jumlah_rekrutan += 1
+                koordinator.save()
+                pemilih.save()
+                return JsonResponse({'success': True, 'message': 'Relawan berhasil ditambahkan', 'redirect': '/tambah-pemilih/'}) 
         else:
             error_message = 'Terjadi kesalahan dalam pengisian form relawan.'
             for field, errors in form.errors.items():
@@ -351,6 +372,12 @@ def tambah_pemilih(request):
 def delete_pemilih(request, pemilih_id):
     try:
         pemilih = DataPemilih.objects.get(id=pemilih_id)
+       
+        koordinator_id = pemilih.koordinator.id
+        koordinator = DataKoordinator.objects.get(pk=koordinator_id)
+        koordinator.jumlah_rekrutan -= 1
+        koordinator.save()
+
         pemilih.delete()
         return JsonResponse({'message': 'Pemilih berhasil dihapus'})
     except DataPemilih.DoesNotExist:
@@ -510,6 +537,7 @@ from django.shortcuts import render
 from .models import DataWarga
 
 @login_required
+@user_passes_test(is_superuser_or_staff)
 def data_wilayah_view(request):
     kabupaten_list = DataWarga.objects.values('kabupaten').distinct()
     kecamatan_list = DataWarga.objects.values('kecamatan').distinct()
@@ -600,6 +628,7 @@ from .models import PengaturanWilayah
 from .forms import PengaturanWilayahForm
 
 @login_required
+@user_passes_test(is_superuser_or_staff)
 def setting_page(request):
     pengaturan = PengaturanWilayah.objects.first() 
     form = PengaturanWilayahForm(instance=pengaturan)
@@ -644,6 +673,7 @@ from Pemilu.models import DataPemilu
 from django.db.models import Count, Sum
 
 @login_required
+@user_passes_test(is_superuser_or_staff)
 def analisa (request):
     kabupaten_data = DataPemilu.objects.values('kabupaten').distinct()
     

@@ -47,6 +47,4 @@ urlpatterns = [
     path('list-wilayah/', list_wilayah, name='list_wilayah'),
     path('isi-hasil-pemilu/<str:kecamatan_name>/<str:kelurahan_name>/', isi_hasil_pemilu, name='isi_hasil_pemilu'),
 
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
